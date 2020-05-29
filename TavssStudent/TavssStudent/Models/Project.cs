@@ -8,6 +8,8 @@ namespace TavssStudent.Models
         public Project()
         {
             Developer = new List<Developer>();
+            Framework = new Framework();
+            SuperVisior = new SuperVisor();
         }
         
         public string Id { get; set; }

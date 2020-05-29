@@ -23,8 +23,13 @@ namespace TavssStudent.Services
         Task<List<Done>> GetAllDone(string projectId);
 
         //create
-        Task<bool> CreateProject(CreateProjectViewModel model);
-        Task<bool> CreateFramework(string projectId);
-        Task<bool> AddDeveloperToProject(string projectId, Developer developer);
+        Task CreateProject(CreateProjectViewModel model);
+        Task CreateFramework(string projectId);
+        Task AddDeveloperToProject(string projectId, Developer developer);
+
+        //Put
+        Task<bool> AssignToDo(string projectId, ToDoViewModel model);
+        Task<bool> AssignDone(string projectId, DoneViewModel model);
+        Task<bool> AssignInProgress(string projectId, InProgressViewModel model);
     }
 }

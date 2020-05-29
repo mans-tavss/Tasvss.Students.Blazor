@@ -1,0 +1,108 @@
+﻿@inherits FrameworkDisplayBase
+
+<div style="overflow: hidden;">
+    <div style="float: left; box-shadow: 10px 10px 5px #aaaaaa;  min-height: 400px; margin-right: 100px; margin-left: 100px; width: 250px">
+        <div class="card__title">
+            <p style="text-align: center; font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">To Do</p>
+        </div>
+
+        <div class="card__info">
+            <table>
+                @if (Framework.ToDos != null)
+                {
+                    @foreach (var toDo in Framework.ToDos)
+                    {
+                        <tr>
+                            <th style="color: #1695e4; font-size: 20px;">Name:</th>
+                            <td>@toDo.Name</td>
+                        </tr>
+                        <tr>
+                            <th style="color: #1695e4; font-size: 20px;">Description:</th>
+                            <td>@toDo.Descreption</td>
+                        </tr>
+                        <tr>
+                            <th style="color: #1695e4; font-size: 20px;">Start Date:</th>
+                            <td>@toDo.StartDate.ToShortDateString()</td>
+                        </tr>
+                        <tr>
+                            <th style="color: #1695e4; font-size: 20px;">End Date:</th>
+                            <td>@toDo.EndDate.ToShortDateString()</td>
+                        </tr>
+                    }
+                   <a class="btn btn-primary" style="width:auto" href="@($"/addtodo/{ProjectId}")">Add ToDo</a>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div style="float: left;">
+        <div style="float: left; box-shadow: 10px 10px 5px #aaaaaa; margin-right: 100px; min-height: 400px; width: 250px;">
+            <div class="card__title">
+                <p style="text-align: center; font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">InProgress</p>
+            </div>
+
+            <div class="card__info">
+                <table>
+                    @if (Framework.InProgress != null)
+                    {
+                        @foreach (var inProgress in Framework.InProgress)
+                        {
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">Name:</th>
+                                <td>@inProgress.Name</td>
+                            </tr>
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">Description:</th>
+                                <td>@inProgress.Descreption</td>
+                            </tr>
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">Start Date:</th>
+                                <td>@inProgress.StartDate.ToShortDateString()</td>
+                            </tr>
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">End Date:</th>
+                                <td>@inProgress.EndDate.ToShortDateString()</td>
+                            </tr>
+                        }
+                        <a class="btn btn-primary" style="width:auto" href="@($"/addinprogress/{ProjectId}")">Add InProgress</a>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="float: left;">
+        <div style="float: left; box-shadow: 10px 10px 5px #aaaaaa; margin-right: 100px; min-height: 400px;">
+            <div class="card__title">
+                <p style="text-align: center; font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">Dones</p>
+            </div>
+
+            <div class="card__info">
+                <table>
+                    @if (Framework.Dones != null)
+                    {
+                        @foreach (var done in Framework.Dones)
+                        {
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">Name:</th>
+                                <td>@done.Name</td>
+                            </tr>
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">Description:</th>
+                                <td>@done.Descreption</td>
+                            </tr>
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">Start Date:</th>
+                                <td>@done.StartDate.ToShortDateString()</td>
+                            </tr>
+                            <tr>
+                                <th style="color: #1695e4; font-size: 20px;">End Date:</th>
+                                <td>@done.EndDate.ToShortDateString()</td>
+                            </tr>
+                        }
+                        <a class="btn btn-primary" style="width:auto" href="@($"/adddone/{ProjectId}")">Add Done</a>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

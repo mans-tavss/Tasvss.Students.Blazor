@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TavssStudent.Models;
 using TavssStudent.ViewModels;
@@ -10,74 +12,139 @@ namespace TavssStudent.Services
 {
     public class ProjectService : IProjectService
     {
-        public Task<bool> AddDeveloperToProject(string projectId, Developer developer)
+        private readonly HttpClient httpClient;
+
+        public ProjectService(HttpClient httpClient)
         {
-            throw new NotImplementedException();
+            this.httpClient = httpClient;
+        }
+        public async Task AddDeveloperToProject(string projectId, Developer developer)
+        {
+            await httpClient.PutJsonAsync<Developer>($"api/v1/project/{projectId}", developer);
+
         }
 
-        public Task<bool> CreateFramework(string projectId)
+        public async Task<bool> AssignDone(string projectId, DoneViewModel model)
         {
-            throw new NotImplementedException();
+           var result= await httpClient.PutJsonAsync<DoneViewModel>($"api/MongoProject/api/v1/project/AssignDone/{projectId}", model);
+            if (result != null)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public Task<bool> CreateProject(CreateProjectViewModel model)
+        public async Task<bool> AssignInProgress(string projectId, InProgressViewModel model)
         {
-            throw new NotImplementedException();
+            var result = await httpClient.PutJsonAsync<InProgressViewModel>($"api/MongoProject/api/v1/project/AssignInProgress/{projectId}", model);
+            if (result != null)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public Task<string> DownloadProject(string projectId)
+        public async Task<bool> AssignToDo(string projectId, ToDoViewModel model)
         {
-            throw new NotImplementedException();
+            var result = await httpClient.PutJsonAsync<ToDoViewModel>($"api/MongoProject/api/v1/project/AssignToDo/{projectId}", model);
+            if (result != null)
+            {
+                return true;
+            }
+            return false;
         }
 
-        public Task<List<Done>> GetAllDone(string projectId)
+        public async Task CreateFramework(string projectId)
         {
-            throw new NotImplementedException();
+            await httpClient.PostJsonAsync($"api/MongoProject/api/v1/project/CreateFramework/{projectId}", null);
+
+
         }
 
-        public Task<List<InProgress>> GetAllInProgress(string projectId)
+        public async Task CreateProject(CreateProjectViewModel model)
         {
-            throw new NotImplementedException();
+            //var r = await httpClient.PostJsonAsync<CreateProjectViewModel>($"api/MongoProject/api/v1/project/CreateProject",model);
+
+            StringContent modelJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PostAsync("api/MongoProject/api/v1/project/CreateProject", modelJson);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await JsonSerializer.DeserializeAsync<CreateProjectViewModel>(await response.Content.ReadAsStreamAsync());
+                return;
+            }
         }
 
-        public Task<IEnumerable<Project>> GetAllProjects()
+        public async Task<string> DownloadProject(string projectId)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetJsonAsync<String>($"api/MongoProject/api/v1/project/DownloadProject/{projectId}");
+
         }
 
-        public Task<List<ToDo>> GetAllToDo(string projectId)
+        public async Task<List<Done>> GetAllDone(string projectId)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetJsonAsync<List<Done>>($"api/v1/project/{projectId}");
+
         }
 
-        public Task<Developer> GetDeveloperById(string developerId, string projectId)
+        public async Task<List<InProgress>> GetAllInProgress(string projectId)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetJsonAsync<List<InProgress>>($"api/v1/project/{projectId}");
+
         }
 
-        public Task<List<Developer>> GetDevelopersInProject(string projectId)
+        public async Task<IEnumerable<Project>> GetAllProjects()
         {
-            throw new NotImplementedException();
+            return await httpClient.GetJsonAsync<List<Project>>($"api/MongoProject/api/v1/project/GetAllProjects");
+
+            //return await JsonSerializer.DeserializeAsync<IEnumerable<Project>>
+            //(await httpClient.GetStreamAsync($"api/mongoproject/api/v1/project/getallprojects"),
+            //    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
         }
 
-        public Task<Framework> GetFramework(string projectId)
+        public async Task<List<ToDo>> GetAllToDo(string projectId)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetJsonAsync<List<ToDo>>($"api/MongoProject/api/v1/project/GetProjectById/{projectId}");
+
         }
 
-        public Task<Project> GetProjectById(string projectId)
+        public async Task<Developer> GetDeveloperById(string developerId, string projectId)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetJsonAsync<Developer>($"api/v1/project/{developerId}/{projectId}");
+
         }
 
-        public Task<IEnumerable<Project>> GetProjectByName(string projectName)
+        public async Task<List<Developer>> GetDevelopersInProject(string projectId)
         {
-            throw new NotImplementedException();
+            return await httpClient.GetJsonAsync<List<Developer>>($"api/v1/project/{projectId}");
+
         }
 
-        public Task<string> GetWiki(string projectId)
+        public async Task<Framework> GetFramework(string projectId)
         {
-            throw new NotImplementedException();
+            var r= await httpClient.GetJsonAsync<Framework>($"api/MongoProject/api/v1/project/GetFramework/{projectId}");
+            return r;
+        }
+
+        public async Task<Project> GetProjectById(string projectId)
+        {
+            //var r= await httpClient.GetJsonAsync<Project>($"api/MongoProject/api/v1/project/GetProjectById/{projectId}");
+            //return r;
+            return await JsonSerializer.DeserializeAsync<Project>
+            (await httpClient.GetStreamAsync($"api/MongoProject/api/v1/project/GetProjectById/{projectId}"),
+                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        }
+
+        public async Task<IEnumerable<Project>> GetProjectByName(string projectName)
+        {
+            return await httpClient.GetJsonAsync<IEnumerable<Project>>($"api/v1/project/{projectName}");
+
+        }
+
+        public async Task<string> GetWiki(string projectId)
+        {
+            return await httpClient.GetJsonAsync<string>($"api/v1/project/{projectId}");
+
         }
     }
 }

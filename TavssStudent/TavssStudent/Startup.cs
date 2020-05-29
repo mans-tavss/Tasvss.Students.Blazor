@@ -33,6 +33,10 @@ namespace TavssStudent
             {
                 client.BaseAddress = new Uri("https://localhost:7002/");
             });
+            services.AddHttpClient<IProjectService,ProjectService>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:7001/");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
