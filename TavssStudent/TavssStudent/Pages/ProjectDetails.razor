@@ -76,8 +76,8 @@
 
 
 
-@if (Project.Id != null && Project.Framework != null && (Project.Framework.ToDos.Count()>0
-  || Project.Framework.InProgress.Count() > 0 || Project.Framework.Dones.Count() > 0))
+@if (Project.Id != null && Project.Framework != null && (Project.Framework.ToDos.Count() > 0
+|| Project.Framework.InProgress.Count() > 0 || Project.Framework.Dones.Count() > 0))
 {
 
     <FrameworkDisplay FrameworkParm="@Project.Framework" ProjectId="@Project.Id">
@@ -97,17 +97,6 @@
         }
     </div>
     <!-- /supervisisor -->
-    <br>
-    <!-- start wiki -->
-    <div>
-        <h4 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wiki</h4>
-        <div style="margin-left: 100px;">
-            &nbsp;<embed src="AI.pdf" width="600px" height="600px" />
-        </div>
-    </div>
-    <br>
-    <br>
-    <!-- end wiki -->
     <!-- start evaluation -->
     <div>
         <h6 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluation<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></h6>
@@ -117,16 +106,25 @@
     </div>
     <!-- /evaluation -->
     <br>
+    @if (Project.Framework.ToDos.Count() == 0 && Project.Framework.Dones.Count() == 0 && Project.Framework.InProgress.Count() == 0)
+    {
+        <a class="btn btn-primary" style="margin:auto;width:auto" href="@($"/addtodo/{ProjectId}")">add todo</a>
+    }
+
 
 }
-@if(Project.Framework ==null)
+@if (Project.Framework == null)
 {
-    <a class="btn btn-primary" @onclick="CreateFrameworkAsync" > Create Framework</a>
+    <a class="btn btn-primary" @onclick="CreateFrameworkAsync"> Create Framework</a>
 }
-@if ( Project.Framework.ToDos.Count() == 0 && Project.Framework.Dones.Count() == 0 && Project.Framework.InProgress.Count() == 0)
+else
 {
-    <a class="btn btn-primary" style="margin:auto;width:auto" href="@($"/addtodo/{ProjectId}")">add todo</a>
+    @if (Project.Framework.ToDos.Count() == 0 && Project.Framework.Dones.Count() == 0 && Project.Framework.InProgress.Count() == 0)
+    {
+        <a class="btn btn-primary" style="margin:auto;width:auto" href="@($"/addtodo/{ProjectId}")">add todo</a>
+    }
 }
+
 
 <!-- related course -->
 <section class="section pt-0">

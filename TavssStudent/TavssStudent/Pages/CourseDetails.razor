@@ -1,6 +1,6 @@
 ﻿@page "/coursedetails/{CourseId}"
 @inherits CourseDetailsBase
-
+    <base href="~/" />
 @if (Course == null)
 {
     <h1>Loading</h1>
@@ -8,7 +8,7 @@
 else
 {
     <!-- page title -->
-    <section class="page-title-section overlay" data-background="@Course.LogoPath">
+    <section class="page-title-section overlay" asp-append-version="true" data-background="@Course.LogoPath">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -33,7 +33,7 @@ else
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="@modeule.LogoPath" alt="course thumb">
+                            <img class="card-img-top rounded-0" asp-append-version="true" src="images/courses/course-6.jpg" alt="course thumb">
                             <div class="card-body">
                                 <a href="course-single.html">
                                     <h4 class="card-title">@modeule.Name</h4>
@@ -46,4 +46,8 @@ else
             </div>
         </section>
     }
+}
+else
+{
+    <h1 class="btn btn-warning">There is no modules.</h1>
 }

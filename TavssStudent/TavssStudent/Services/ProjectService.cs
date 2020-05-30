@@ -46,9 +46,18 @@ namespace TavssStudent.Services
 
         public async Task<bool> AssignToDo(string projectId, ToDoViewModel model)
         {
-            var result = await httpClient.PutJsonAsync<ToDoViewModel>($"api/MongoProject/api/v1/project/AssignToDo/{projectId}", model);
-            if (result != null)
+            //var result = await httpClient.PutJsonAsync<ToDoViewModel>($"api/MongoProject/api/v1/project/AssignToDo/{projectId}", model);
+            //if (result != null)
+            //{
+            //    return true;
+            //}
+            //return false;
+
+            StringContent modelJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PutAsync($"api/MongoProject/api/v1/project/AssignToDo/{projectId}", modelJson);
+            if (response.IsSuccessStatusCode)
             {
+                var result = await JsonSerializer.DeserializeAsync<ToDoViewModel>(await response.Content.ReadAsStreamAsync());
                 return true;
             }
             return false;

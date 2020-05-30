@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlazorStrap;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,7 @@ namespace TavssStudent
         {
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(option => option.DetailedErrors = true);
+            //services.AddBootstrapCss();
 
             services.AddHttpClient<ICourseService,CourseService>(client =>
             {
