@@ -26,10 +26,17 @@ namespace TavssStudent.Services
         Task CreateProject(CreateProjectViewModel model);
         Task CreateFramework(string projectId);
         Task AddDeveloperToProject(string projectId, Developer developer);
+        Task<bool> AddSuperVisorToProject(string projectId, SuperVisor superVisor);
 
         //Put
         Task<bool> AssignToDo(string projectId, ToDoViewModel model);
         Task<bool> AssignDone(string projectId, DoneViewModel model);
         Task<bool> AssignInProgress(string projectId, InProgressViewModel model);
+
+        //delete
+        Task<bool> RemoveDeveloperFromProject(string projectId, string developerId);
+        Task<bool> RemoveToDOFromProject(string projectId, string todoId);
+        Task<bool> RemoveInProgressFromProject(string projectId, string inprogressId);
+        Task<bool> RemoveDoneFromProject(string projectId, string doneId);
     }
 }

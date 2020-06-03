@@ -1,107 +1,145 @@
 ﻿@inherits FrameworkDisplayBase
 
-<div style="overflow: hidden;">
-    <div style="float: left; box-shadow: 10px 10px 5px #aaaaaa;  min-height: 400px; margin-right: 100px; margin-left: 100px; width: 250px">
-        <div class="card__title">
-            <p style="text-align: center; font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">To Do</p>
-        </div>
-
-        <div class="card__info">
-            <table>
-                @if (Framework.ToDos != null)
-                {
-                    @foreach (var toDo in Framework.ToDos)
-                    {
-                        <tr>
-                            <th style="color: #1695e4; font-size: 20px;">Name:</th>
-                            <td>@toDo.Name</td>
-                        </tr>
-                        <tr>
-                            <th style="color: #1695e4; font-size: 20px;">Description:</th>
-                            <td>@toDo.Descreption</td>
-                        </tr>
-                        <tr>
-                            <th style="color: #1695e4; font-size: 20px;">Start Date:</th>
-                            <td>@toDo.StartDate.ToShortDateString()</td>
-                        </tr>
-                        <tr>
-                            <th style="color: #1695e4; font-size: 20px;">End Date:</th>
-                            <td>@toDo.EndDate.ToShortDateString()</td>
-                        </tr>
-                    }
-                   <a class="btn btn-primary" style="width:auto" href="@($"/addtodo/{ProjectId}")">Add ToDo</a>
-                }
-
-            </table>
-        </div>
-    </div>
-    <div style="float: left;">
-        <div style="float: left; box-shadow: 10px 10px 5px #aaaaaa; margin-right: 100px; min-height: 400px; width: 250px;">
-            <div class="card__title">
-                <p style="text-align: center; font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">InProgress</p>
+@*ToDo*@
+<div class="row d-flex justify-content-center container">
+    <div class="col-md-8">
+        <div class="card-hover-shadow-2x mb-3 card">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;Task Lists</div>
             </div>
+            <div class="scroll-area-sm">
+                <perfect-scrollbar class="ps-show-limits">
+                    <div style="position: static;" class="ps ps--active-y">
+                        <div class="ps-content">
+                            <ul class=" list-group list-group-flush">
+                                @if (Framework.ToDos != null)
+                                {
+                                    @foreach (var toDo in Framework.ToDos)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="todo-indicator bg-warning"></div>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left mr-2">
+                                                        <div class="custom-checkbox custom-control"> </div>
+                                                    </div>
+                                                    <div class="widget-content-left">
+                                                        <div class="widget-heading ">
+                                                            @toDo.Name <div class="badge badge-info ml-2 offset-2 col-3">
+                                                                Start Date: @toDo.StartDate.ToShortDateString()
+                                                            </div><div class="badge badge-info ml-2 offset-2 col-3">Start Date: @toDo.EndDate.ToShortDateString()</div>
+                                                        </div>
+                                                        <div class="widget-subheading"><i>@toDo.Descreption</i></div>
+                                                    </div>
+                                                    <div class="widget-content-right"><button class="border-0 btn-transition btn btn-outline-danger" @onclick="@(e=>DeleteToDoAsync(toDo.Id))"> <i class="fa fa-trash"></i> </button> </div>
+                                                </div>
+                                            </div>
+                                        </li>
 
-            <div class="card__info">
-                <table>
-                    @if (Framework.InProgress != null)
-                    {
-                        @foreach (var inProgress in Framework.InProgress)
-                        {
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">Name:</th>
-                                <td>@inProgress.Name</td>
-                            </tr>
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">Description:</th>
-                                <td>@inProgress.Descreption</td>
-                            </tr>
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">Start Date:</th>
-                                <td>@inProgress.StartDate.ToShortDateString()</td>
-                            </tr>
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">End Date:</th>
-                                <td>@inProgress.EndDate.ToShortDateString()</td>
-                            </tr>
-                        }
-                        <a class="btn btn-primary" style="width:auto" href="@($"/addinprogress/{ProjectId}")">Add InProgress</a>
-                    }
-                </table>
+                                    }
+                                    <a class="btn btn-primary" style="width:auto" href="@($"/addtodo/{ProjectId}")">Add ToDo</a>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </perfect-scrollbar>
             </div>
         </div>
     </div>
-    <div style="float: left;">
-        <div style="float: left; box-shadow: 10px 10px 5px #aaaaaa; margin-right: 100px; min-height: 400px;">
-            <div class="card__title">
-                <p style="text-align: center; font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">Dones</p>
-            </div>
+</div>
 
-            <div class="card__info">
-                <table>
-                    @if (Framework.Dones != null)
-                    {
-                        @foreach (var done in Framework.Dones)
-                        {
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">Name:</th>
-                                <td>@done.Name</td>
-                            </tr>
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">Description:</th>
-                                <td>@done.Descreption</td>
-                            </tr>
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">Start Date:</th>
-                                <td>@done.StartDate.ToShortDateString()</td>
-                            </tr>
-                            <tr>
-                                <th style="color: #1695e4; font-size: 20px;">End Date:</th>
-                                <td>@done.EndDate.ToShortDateString()</td>
-                            </tr>
-                        }
-                        <a class="btn btn-primary" style="width:auto" href="@($"/adddone/{ProjectId}")">Add Done</a>
-                    }
-                </table>
+@*InProgress*@
+<div class="row d-flex justify-content-center container">
+    <div class="col-md-8">
+        <div class="card-hover-shadow-2x mb-3 card">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;Task Lists</div>
+            </div>
+            <div class="scroll-area-sm">
+                <perfect-scrollbar class="ps-show-limits">
+                    <div style="position: static;" class="ps ps--active-y">
+                        <div class="ps-content">
+                            <ul class=" list-group list-group-flush">
+                                @if (Framework.InProgress != null)
+                                {
+                                    @foreach (var inProgress in Framework.InProgress)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="todo-indicator bg-primary"></div>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left mr-2">
+                                                        <div class="custom-checkbox custom-control"> </div>
+                                                    </div>
+                                                    <div class="widget-content-left">
+                                                        <div class="widget-heading ">
+                                                            @inProgress.Name <div class="badge badge-info ml-2 offset-2 col-3">
+                                                                Start Date: @inProgress.StartDate.ToShortDateString()
+                                                            </div><div class="badge badge-info ml-2 offset-2 col-3">Start Date: @inProgress.EndDate.ToShortDateString()</div>
+                                                        </div>
+                                                        <div class="widget-subheading"><i>@inProgress.Descreption</i></div>
+                                                    </div>
+                                                    <div class="widget-content-right"><button class="border-0 btn-transition btn btn-outline-danger" 
+                                                                           @onclick="@(e=>DeleteInProgressAsync(inProgress.Id))"> <i class="fa fa-trash"></i> </button> </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    }
+                                    <a class="btn btn-primary" style="width:auto" href="@($"/addinprogress/{ProjectId}")">Add InProgress</a>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </perfect-scrollbar>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Done*@
+<div class="row d-flex justify-content-center container">
+    <div class="col-md-8">
+        <div class="card-hover-shadow-2x mb-3 card">
+            <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fa fa-tasks"></i>&nbsp;Task Lists</div>
+            </div>
+            <div class="scroll-area-sm">
+                <perfect-scrollbar class="ps-show-limits">
+                    <div style="position: static;" class="ps ps--active-y">
+                        <div class="ps-content">
+                            <ul class=" list-group list-group-flush">
+                                @if (Framework.Dones != null)
+                                {
+                                    @foreach (var done in Framework.Dones)
+                                    {
+                                        <li class="list-group-item">
+                                            <div class="todo-indicator bg-success"></div>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left mr-2">
+                                                        <div class="custom-checkbox custom-control"> </div>
+                                                    </div>
+                                                    <div class="widget-content-left">
+                                                        <div class="widget-heading ">
+                                                            @done.Name <div class="badge badge-info ml-2 offset-2 col-3">
+                                                                Start Date: @done.StartDate.ToShortDateString()
+                                                            </div><div class="badge badge-info ml-2 offset-2 col-3">Start Date: @done.EndDate.ToShortDateString()</div>
+                                                        </div>
+                                                        <div class="widget-subheading"><i>@done.Descreption</i></div>
+                                                    </div>
+                                                    <div class="widget-content-right"><button class="border-0 btn-transition btn btn-outline-danger"
+                                                                                  @onclick="@(e=>DeleteDoneAsync(done.Id))"> <i class="fa fa-trash"></i> </button> </div>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    }
+                            <a class="btn btn-primary" style="width:auto" href="@($"/adddone/{ProjectId}")">Add done</a>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </perfect-scrollbar>
             </div>
         </div>
     </div>

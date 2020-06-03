@@ -1,6 +1,6 @@
 ﻿@page "/coursedetails/{CourseId}"
 @inherits CourseDetailsBase
-    <base href="~/" />
+<base href="~/" />
 @if (Course == null)
 {
     <h1>Loading</h1>
@@ -8,19 +8,9 @@
 else
 {
     <!-- page title -->
-    <section class="page-title-section overlay" asp-append-version="true" data-background="@Course.LogoPath">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <ul class="list-inline custom-breadcrumb" style="text-align: center;">
-                        <li class="list-inline-item"><a class="h2 text-primary font-secondary text-center" href="courses.html" style="color: #fff !important; font-size: 45px;">YOUR COURSE</a></li>
-                        <li class="list-inline-item text-white h3 font-secondary nasted"> @Course.Name</li>
-                    </ul>
-                    <p class="text-center" style="color: #d6d6e6 !important; font-size: 18px; margin-top: 15px;">Course's Details</p>
-                </div>
-            </div>
-        </div>
-    </section>
+
+    <PageTitle />
+
     <!-- /page title -->
 }
 @if (Course.Modules.Count > 0)
@@ -33,7 +23,7 @@ else
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" asp-append-version="true" src="images/courses/course-6.jpg" alt="course thumb">
+                            <img class="card-img-top rounded-0" asp-append-version="true" src="images/courses/CousesLogo.jpg" alt="course thumb">
                             <div class="card-body">
                                 <a href="course-single.html">
                                     <h4 class="card-title">@modeule.Name</h4>
@@ -49,5 +39,5 @@ else
 }
 else
 {
-    <h1 class="btn btn-warning">There is no modules.</h1>
+    <h1 class="btn btn-warning offset-4">There is no modules.</h1>
 }

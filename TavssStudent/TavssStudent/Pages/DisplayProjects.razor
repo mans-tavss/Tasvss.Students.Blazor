@@ -1,26 +1,13 @@
 ﻿@page "/projects"
 @inherits DisplayProjectsBase
-
 <!-- page title -->
-<section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <ul class="list-inline custom-breadcrumb" style="text-align: center;">
-                    <li class="list-inline-item"><a class="h2 text-primary font-secondary text-center" href="#" style="color: #fff !important; font-size: 58px;">ALL PROJECTS</a></li>
-                    <li class="list-inline-item text-white h3 font-secondary "></li>
-                </ul>
-                <p class="text-center" style="color: #d6d6e6 !important; font-size: 18px; margin-top: 15px;">Make More Projects For Your StartUp</p>
-            </div>
-        </div>
-    </div>
-</section>
+<PageTitle />
 <!-- /page title -->
 <!-- Projects -->
 <section class="section">
     <div class="container">
         <div class="row justify-content-center">
-            @if (Projects !=null)
+            @if (Projects != null)
             {
                 @foreach (var project in Projects)
                 {
@@ -45,8 +32,9 @@
             {
                 <h1>Loading</h1>
             }
-            <div style="margin-left: 200px; margin-right: 200px;" class="col-lg-6 col-sm-6 mb-5 text-center"> 
-            <a href="/addproject" class="btn btn-primary btn-xl">New Project</a> </div>
+            <div style="margin-left: 200px; margin-right: 200px;" class="col-lg-6 col-sm-6 mb-5 text-center">
+                <a href="/addproject" class="btn btn-primary btn-xl">New Project</a>
+            </div>
         </div>
     </div>
 </section>

@@ -1,9 +1,11 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
+
 namespace TavssStudent.Models
 {
-    public class SuperVisor : IUser
+    public class SuperVisor 
     {
-        public string Id { get; set; }
+        [Required]
         public string Name { get; set; }
 
     }

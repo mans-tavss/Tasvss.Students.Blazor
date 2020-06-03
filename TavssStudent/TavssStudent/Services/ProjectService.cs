@@ -20,15 +20,46 @@ namespace TavssStudent.Services
         }
         public async Task AddDeveloperToProject(string projectId, Developer developer)
         {
-            await httpClient.PutJsonAsync<Developer>($"api/v1/project/{projectId}", developer);
+            await httpClient.PutJsonAsync<Developer>($"api/MongoProject/api/v1/project/AddDeveloperToProject/{projectId}", developer);
+            
+            //string DeveloperName = developer.Name;
+            //StringContent modelJson = new StringContent(JsonSerializer.Serialize(DeveloperName), Encoding.UTF8, "application/json");
+            //var response = await httpClient.PutAsync($"api/MongoProject/api/v1/project/AddSuperVisorToProject/{projectId}", modelJson);
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    //CreateSuperVisorViewModel result = await JsonSerializer.DeserializeAsync<CreateSuperVisorViewModel>(await response.Content.ReadAsStreamAsync());
+            //    //return true;
+            //}
+            //return false;
+        }
+        public async Task<bool> AddSuperVisorToProject(string projectId, SuperVisor model)
+        {
+            //await httpClient.PutJsonAsync<Developer>($"api/MongoProject/api/v1/project/AddSuperVisorToProject/{projectId}", model);
 
+            var SuperVisorName = model.Name;
+            StringContent modelJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PutAsync($"api/MongoProject/api/v1/project/AddSuperVisorToProject/{projectId}/{SuperVisorName}", null);
+            if (response.IsSuccessStatusCode)
+            {
+                //CreateSuperVisorViewModel result = await JsonSerializer.DeserializeAsync<CreateSuperVisorViewModel>(await response.Content.ReadAsStreamAsync());
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> AssignDone(string projectId, DoneViewModel model)
         {
-           var result= await httpClient.PutJsonAsync<DoneViewModel>($"api/MongoProject/api/v1/project/AssignDone/{projectId}", model);
-            if (result != null)
+           //var result= await httpClient.PutJsonAsync<DoneViewModel>($"api/MongoProject/api/v1/project/AssignDone/{projectId}", model);
+           // if (result != null)
+           // {
+           //     return true;
+           // }
+           // return false;
+            StringContent modelJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PutAsync($"api/MongoProject/api/v1/project/AssignDone/{projectId}", modelJson);
+            if (response.IsSuccessStatusCode)
             {
+                var result = await JsonSerializer.DeserializeAsync<DoneViewModel>(await response.Content.ReadAsStreamAsync());
                 return true;
             }
             return false;
@@ -36,9 +67,17 @@ namespace TavssStudent.Services
 
         public async Task<bool> AssignInProgress(string projectId, InProgressViewModel model)
         {
-            var result = await httpClient.PutJsonAsync<InProgressViewModel>($"api/MongoProject/api/v1/project/AssignInProgress/{projectId}", model);
-            if (result != null)
+            //var result = await httpClient.PutJsonAsync<InProgressViewModel>($"api/MongoProject/api/v1/project/AssignInProgress/{projectId}", model);
+            //if (result != null)
+            //{
+            //    return true;
+            //}
+            //return false;
+            StringContent modelJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PutAsync($"api/MongoProject/api/v1/project/Inprogress/{projectId}", modelJson);
+            if (response.IsSuccessStatusCode)
             {
+                var result = await JsonSerializer.DeserializeAsync<InProgressViewModel>(await response.Content.ReadAsStreamAsync());
                 return true;
             }
             return false;
@@ -155,5 +194,35 @@ namespace TavssStudent.Services
             return await httpClient.GetJsonAsync<string>($"api/v1/project/{projectId}");
 
         }
+
+
+        #region Delete
+        public async Task<bool> RemoveProject(string projectId)
+        {
+            await httpClient.DeleteAsync($"api/MongoProject/api/v1/project/RemoveProjectById/{projectId}");
+            return true;
+        }
+        public async Task<bool> RemoveDeveloperFromProject(string projectId, string developerId)
+        {
+            await httpClient.DeleteAsync($"api/MongoProject/api/v1/project/RemoveDeveloperFromProject/{projectId}/{developerId}");
+            return true;
+        }
+        public async Task<bool> RemoveToDOFromProject(string projectId, string todoId)
+        {
+            await httpClient.DeleteAsync($"api/MongoProject/api/v1/project/RemoveToDoFromProject/{projectId}/{todoId}");
+            return true;
+        }
+        public async Task<bool> RemoveInProgressFromProject(string projectId, string inprogressId)
+        {
+            await httpClient.DeleteAsync($"api/MongoProject/api/v1/project/RemoveInProgressFromProject/{projectId}/{inprogressId}");
+            return true;
+        }
+        public async Task<bool> RemoveDoneFromProject(string projectId, string doneId)
+        {
+            await httpClient.DeleteAsync($"api/MongoProject/api/v1/project/RemoveDoneFromProject/{projectId}/{doneId}");
+            return true;
+        }
+
+        #endregion
     }
 }

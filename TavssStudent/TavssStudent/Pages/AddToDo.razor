@@ -2,20 +2,9 @@
 @inherits AddToDoBase
 
 
-<section class="page-title-section overlay" data-background="images/backgrounds/page-title.jpg">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <ul class="list-inline custom-breadcrumb" style="text-align: center;">
-                    <li class="list-inline-item"><a class="h2 text-primary font-secondary text-center" href="#" style="color: #fff !important; font-size: 58px;">CREATE YOUR ToDo</a></li>
-                    <li class="list-inline-item text-white h3 font-secondary "></li>
-                </ul>
-                <p class="text-center" style="color: #d6d6e6 !important; font-size: 18px; margin-top: 15px;">Add todo to your project</p>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /page title -->
+<!-- page title -->
+<PageTitle />
+<!--/page title -->
 
 
 <EditForm Model="@ToDo" OnValidSubmit="HandleValidSubmit">
@@ -28,7 +17,7 @@
             ToDo Name
         </label>
         <div class="col-sm-10">
-            <InputText id="firstName" class="form-control" placeholder="First Name"
+            <InputText id="firstName" class="form-control" placeholder="Name"
                        @bind-Value="ToDo.Name" />
             <ValidationMessage For="@(() => ToDo.Name)" />
         </div>
@@ -38,7 +27,7 @@
             Descreption
         </label>
         <div class="col-sm-10">
-            <InputText id="lastName" class="form-control" placeholder="Last Name"
+            <InputText id="lastName" class="form-control" placeholder="Descreption"
                        @bind-Value="ToDo.Descreption" />
             <ValidationMessage For="@(() => ToDo.Descreption)" />
         </div>

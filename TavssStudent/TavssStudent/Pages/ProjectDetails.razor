@@ -1,19 +1,7 @@
 ﻿@page "/projectdetails/{ProjectId}"
 @inherits ProjectDetailsBase
     <!-- page title -->
-<section class="page-title-section overlay" data-background="@Project.ProjectLogo">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <ul class="list-inline custom-breadcrumb" style="text-align: center;">
-                    <li class="list-inline-item"><a class="h2 text-primary font-secondary text-center" style="color: #fff !important; font-size: 45px;">YOUR PROJECTS</a></li>
-                    <li class="list-inline-item text-white h3 font-secondary nasted">@Project.ProjectName</li>
-                </ul>
-                <p class="text-center" style="color: #d6d6e6 !important; font-size: 18px; margin-top: 15px;">Project's Details</p>
-            </div>
-        </div>
-    </div>
-</section>
+<PageTitle />
 <!-- /page title -->
 <!-- section -->
 <section class="section-sm">
@@ -80,32 +68,11 @@
 || Project.Framework.InProgress.Count() > 0 || Project.Framework.Dones.Count() > 0))
 {
 
-    <FrameworkDisplay FrameworkParm="@Project.Framework" ProjectId="@Project.Id">
+    <FrameworkDisplay FrameworkParm="@Project.Framework" ProjectId="@Project.Id" OnProjectDeleted="ProjectDeleted">
 
     </FrameworkDisplay>
 
-    <!-- start supervisisor -->
-    <h6 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supervisior</h6>
-    <div style="margin-left: 90px; font-size: 30px;">
-        @if (@Project.SuperVisior.Name == "No Doctor yet.")
-        {
-            <a class="btn btn-primary" href="@($"/adddoctor/{ProjectId}")">Assign Doctor To The Project</a>
-        }
-        else
-        {
-            @Project.SuperVisior.Name
-        }
-    </div>
-    <!-- /supervisisor -->
-    <!-- start evaluation -->
-    <div>
-        <h6 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluation<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></h6>
-        <div style="margin-left: 90px; font-size: 30px;">
-            @Project.Evalution
-        </div>
-    </div>
-    <!-- /evaluation -->
-    <br>
+
     @if (Project.Framework.ToDos.Count() == 0 && Project.Framework.Dones.Count() == 0 && Project.Framework.InProgress.Count() == 0)
     {
         <a class="btn btn-primary" style="margin:auto;width:auto" href="@($"/addtodo/{ProjectId}")">add todo</a>
@@ -115,18 +82,70 @@
 }
 @if (Project.Framework == null)
 {
-    <a class="btn btn-primary" @onclick="CreateFrameworkAsync"> Create Framework</a>
+    <div>
+        <a class="btn btn-primary col align-self-center" @onclick="CreateFrameworkAsync"> Create Framework</a>
+    </div>
 }
 else
 {
     @if (Project.Framework.ToDos.Count() == 0 && Project.Framework.Dones.Count() == 0 && Project.Framework.InProgress.Count() == 0)
     {
-        <a class="btn btn-primary" style="margin:auto;width:auto" href="@($"/addtodo/{ProjectId}")">add todo</a>
+        <div>
+            <a class="btn btn-primary col align-self-center" href="@($"/addtodo/{ProjectId}")">add todo</a>
+        </div>
     }
 }
 
+<!-- start supervisisor -->
+<h6 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Supervisior</h6>
+<div style="margin-left: 90px; font-size: 30px;">
+    @if (@Project.SuperVisior.Name == "No Doctor yet.")
+    {
+        <a class="btn btn-primary" href="@($"/addsupervisior/{ProjectId}")">Assign Doctor To The Project</a>
+    }
+    else
+    {
+        @Project.SuperVisior.Name
+    }
+</div>
+<!-- /supervisisor -->
+<!--mumbers-->
+<h6 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mumbers :</h6>
+@if (@Project.Developer.Count() == 0)
+{
+    <a class="btn btn-primary" href="@($"/adddeveloper/{ProjectId}")">Assign Developers To The Project</a>
+}
+else
+{
+    <ol>
+        @foreach (var dev in Project.Developer.OrderBy(n => n.Name))
+        {
+            <div class="col offset-3 col-9">
+                <li>
+                    <b>@dev.Name</b> <div class="widget-content-right">
+                        <button class="border-0 btn-transition btn btn-outline-danger"
+                                @onclick="@(e=>DeleteDeveloperAsync(dev.Id))">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </li>
+            </div>
+        }
+        <div class="col offset-2"> <a class="btn btn-primary" href="@($"/adddeveloper/{ProjectId}")">Add Developer</a></div>
+    </ol>
+}
 
-<!-- related course -->
+<!-- start evaluation -->
+<div>
+    <h6 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluation<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></h6>
+    <div style="margin-left: 90px; font-size: 30px;">
+        @Project.Evalution
+    </div>
+</div>
+<!-- /evaluation -->
+<br>
+
+<!-- related projects -->
 <section class="section pt-0">
     <div class="container">
         <div class="row">
