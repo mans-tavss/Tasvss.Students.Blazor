@@ -44,7 +44,7 @@ namespace TavssStudent.Pages
             await ProjectService.CreateFramework(ProjectId);
             Project = await ProjectService.GetProjectById(ProjectId);
             FrameworkParm = Project.Framework;
-            var result = await ProjectService.GetAllProjects();
+            await ProjectService.GetAllProjects();
             StateHasChanged();
         }
         protected async Task DeleteDeveloperAsync(string developerId)
