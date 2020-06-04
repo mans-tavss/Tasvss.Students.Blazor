@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace TavssStudent.Models
 {
-    public class MongoCommunitiesDto
+    public class CommunitiesDto
     {
-        public MongoCommunitiesDto()
+        public CommunitiesDto()
         {
             Companies = new List<Company>();
             Developers = new List<Developer>();

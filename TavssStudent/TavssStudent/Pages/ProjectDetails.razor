@@ -1,7 +1,7 @@
 ﻿@page "/projectdetails/{ProjectId}"
 @inherits ProjectDetailsBase
     <!-- page title -->
-<PageTitle />
+<PageTitle Title="Details for project" Desc="@Project.ProjectName"></PageTitle>
 <!-- /page title -->
 <!-- section -->
 <section class="section-sm">
@@ -33,16 +33,14 @@
                             <i class="ti-alarm-clock text-primary icon-md mr-2"></i>
                             <div class="text-left">
                                 <h6 class="mb-0">DURATION</h6>
-                                <p class="mb-0">3 Weeks</p>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-inline-item mr-4 mb-3 mb-sm-0">
-                        <div class="d-flex align-items-center">
-                            <i class="ti-wand text-primary icon-md mr-2"></i>
-                            <div class="text-left">
-                                <h6 class="mb-0">TOOLS</h6>
-                                <p class="mb-0">GUI Interface</p>
+                                @if (Project.Framework != null && Project.Framework.ToDos != null)
+                                {
+                                    <p class="mb-0">@Duration Day</p>
+                                }
+                                else
+                                {
+                                    <p class="mb-0">0 Day</p>
+                                }
                             </div>
                         </div>
                     </li>
@@ -75,15 +73,15 @@
 
     @if (Project.Framework.ToDos.Count() == 0 && Project.Framework.Dones.Count() == 0 && Project.Framework.InProgress.Count() == 0)
     {
-        <a class="btn btn-primary" style="margin:auto;width:auto" href="@($"/addtodo/{ProjectId}")">add todo</a>
+        <a class="btn btn-primary" style="margin:70px 70px;width:400px" href="@($"/addtodo/{ProjectId}")">add todo</a>
     }
-
+    
 
 }
 @if (Project.Framework == null)
 {
     <div>
-        <a class="btn btn-primary col align-self-center" @onclick="CreateFrameworkAsync"> Create Framework</a>
+        <a class="btn btn-primary col align-self-center" style="margin:70px 70px;width:400px"  @onclick="CreateFrameworkAsync"> Create Framework</a>
     </div>
 }
 else
@@ -113,7 +111,8 @@ else
 <h6 style=" font-size: 40px; font-weight: bolder; font-style: italic; font-family: Arial, Helvetica, sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mumbers :</h6>
 @if (@Project.Developer.Count() == 0)
 {
-    <a class="btn btn-primary" href="@($"/adddeveloper/{ProjectId}")">Assign Developers To The Project</a>
+    <a class="btn btn-primary" style=" margin-left: 90px; width: 310px;"
+       href="@($"/adddeveloper/{ProjectId}")">Assign Developers To The Project</a>
 }
 else
 {
@@ -131,7 +130,10 @@ else
                 </li>
             </div>
         }
-        <div class="col offset-2"> <a class="btn btn-primary" href="@($"/adddeveloper/{ProjectId}")">Add Developer</a></div>
+        <div class="col offset-2">
+            <a class="btn btn-primary"
+               href="@($"/adddeveloper/{ProjectId}")">Add Developer</a>
+        </div>
     </ol>
 }
 
@@ -166,7 +168,8 @@ else
                                 <a href="project-single.html">
                                     <h4 class="card-title">@project.ProjectName</h4>
                                 </a>
-                                <a href="@($"/projectdetails/{project.Id}")" class="btn btn-primary btn-sm">Dicover</a>
+                                <a href="@($"/projectdetails/{project.Id}")" @onclick="()=>HandleClick(project.Id)"
+                                   class="btn btn-primary btn-sm">Dicover</a>
                             </div>
                         </div>
                     </div>

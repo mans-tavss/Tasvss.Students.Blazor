@@ -11,7 +11,7 @@ namespace TavssStudent.Services
     public interface ICommunityService
     {
         Task<IEnumerable<MinCommunityListViewModel>> GetCommunities();
-        Task<MongoCommunitiesDto> GetCommunity(string CID);
+        Task<CommunitiesDto> GetCommunity(string CID);
         Task<IEnumerable<MinCommunityListViewModel>> GetDeveloperCommunities(string DID);
 
         //company

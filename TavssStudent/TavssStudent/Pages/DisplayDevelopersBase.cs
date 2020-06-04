@@ -9,17 +9,20 @@ using TavssStudent.Services;
 
 namespace TavssStudent.Pages
 {
-    public class DisplayCommunitiesBase:ComponentBase
+    public class DisplayDevelopersBase:ComponentBase
     {
         [Inject]
         public ICommunityService CommunityService { get; set; }
 
-        public IEnumerable<MinCommunityListViewModel> Communties{ get; set; }
+        [Parameter]
+        public string CommunityId { get; set; }
+
+        public IEnumerable<Developer> Developers { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Communties = await CommunityService.GetCommunities();
+            var community= await CommunityService.GetCommunity(CommunityId);
+            Developers = community.Developers;
         }
-
     }
 }

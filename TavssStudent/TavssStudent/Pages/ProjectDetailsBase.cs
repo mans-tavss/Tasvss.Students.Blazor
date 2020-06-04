@@ -9,7 +9,7 @@ using TavssStudent.Services;
 
 namespace TavssStudent.Pages
 {
-    public class ProjectDetailsBase:ComponentBase
+    public class ProjectDetailsBase : ComponentBase
     {
         [Inject]
         public IProjectService ProjectService { get; set; }
@@ -17,12 +17,13 @@ namespace TavssStudent.Pages
         public NavigationManager NavigationManager { get; set; }
         [Parameter]
         public string ProjectId { get; set; }
+        public int Duration { get; set; }
 
         public Project Project { get; set; } = new Project()
         {
             Developer = new List<Developer>(),
             Framework = new Framework(),
-            SuperVisior = new SuperVisor() { Name = "No Doctor yet."}
+            SuperVisior = new SuperVisor() { Name = "No Doctor yet." }
         };
 
         public IEnumerable<Project> Projects { get; set; } = new List<Project>();
@@ -30,11 +31,16 @@ namespace TavssStudent.Pages
         protected async override Task OnInitializedAsync()
         {
             Project = await ProjectService.GetProjectById(ProjectId);
-            if (Project.SuperVisior==null)
+            if (Project.SuperVisior == null)
             {
                 Project.SuperVisior = new SuperVisor { Name = "No Doctor yet." };
             }
             FrameworkParm = Project.Framework;
+            if (Project.Framework != null && Project.Framework.ToDos != null)
+            {
+                if(Project.Framework.ToDos.Count()>0)
+                    Duration = Project.Framework.ToDos.LastOrDefault().EndDate.Day - Project.Framework.ToDos.LastOrDefault().StartDate.Day;
+            }
             var result = await ProjectService.GetAllProjects();
             Projects = result.Where(p => p.Id != ProjectId).Take(3);
         }
@@ -49,7 +55,7 @@ namespace TavssStudent.Pages
         }
         protected async Task DeleteDeveloperAsync(string developerId)
         {
-            await ProjectService.RemoveDeveloperFromProject(ProjectId,developerId); 
+            await ProjectService.RemoveDeveloperFromProject(ProjectId, developerId);
             StateHasChanged();
             NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
 
@@ -64,6 +70,11 @@ namespace TavssStudent.Pages
             FrameworkParm = Project.Framework;
             var result = await ProjectService.GetAllProjects();
             Projects = result.Where(p => p.Id != ProjectId).Take(3);
+        }
+
+        protected void HandleClick(string projectId)
+        {
+            NavigationManager.NavigateTo($"/projectdetails/{projectId}", true);
         }
     }
 }

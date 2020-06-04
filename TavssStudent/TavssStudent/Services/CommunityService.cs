@@ -13,7 +13,6 @@ namespace TavssStudent.Services
     public class CommunityService : ICommunityService
     {
         private readonly HttpClient httpClient;
-
         public CommunityService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
@@ -46,20 +45,20 @@ namespace TavssStudent.Services
             return await httpClient.GetJsonAsync<IEnumerable<MinCommunityListViewModel>>("api/v1/Community/GetCommunities");
         }
 
-        public async Task<MongoCommunitiesDto> GetCommunity(string CID)
+        public async Task<CommunitiesDto> GetCommunity(string CID)
         {
-            return await httpClient.GetJsonAsync<MongoCommunitiesDto>($"api/v1/Community/GetCommunity/{CID}");
+            return await httpClient.GetJsonAsync<CommunitiesDto>($"api/v1/Community/GetCommunity/{CID}");
         }
 
         public async Task<IEnumerable<Company>> GetCommunityCompanies(string CID)
         {
-            return await httpClient.GetJsonAsync<IEnumerable<Company>>("api/v1/Community/GetCompanies");
-
+             return await httpClient.GetJsonAsync<IEnumerable<Company>>($"api/v1/Community/GetCommunityCompanies/{CID}");
+             
         }
-
+        
         public async Task<IEnumerable<Company>> GetCompanies()
         {
-            return await httpClient.GetJsonAsync<IEnumerable<Company>>("");
+            return await httpClient.GetJsonAsync<IEnumerable<Company>>("api/v1/Community/GetCompanies");
         }
 
         public async Task<Company> GetCompany(string CoID)
@@ -67,6 +66,7 @@ namespace TavssStudent.Services
             return await httpClient.GetJsonAsync<Company>($"api/v1/Community/GetCompany/{CoID}");
 
         }
+
         public async Task<Company> SearchCompany(string Name)
         {
             return await httpClient.GetJsonAsync<Company>($"api/v1/Community/SearchCompany/{Name}");

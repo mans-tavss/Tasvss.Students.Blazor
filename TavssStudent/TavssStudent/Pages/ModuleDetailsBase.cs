@@ -13,6 +13,8 @@ namespace TavssStudent.Pages
     {
         [Inject]
         public ICourseService CourseService { get; set; }
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
         [Parameter]
         public string CourseId { get; set; }
         public CourseDto Course { get; set; } = new CourseDto()
@@ -33,6 +35,10 @@ namespace TavssStudent.Pages
         {
             Module = await CourseService.GetModuleById(CourseId, ModeuleId);
             Course = await CourseService.GetCourseById(CourseId);
+        }
+        protected void HandleClick(string moduleId)
+        {
+            NavigationManager.NavigateTo($"/moduledetails/{CourseId}/{moduleId}",true);
         }
     }
 }

@@ -9,8 +9,7 @@ else
 {
     <!-- page title -->
 
-    <PageTitle />
-
+<PageTitle Title="Course Details" Desc="@Course.Name"></PageTitle>
     <!-- /page title -->
 }
 @if (Course.Modules.Count > 0)
@@ -39,5 +38,7 @@ else
 }
 else
 {
-    <h1 class="btn btn-warning offset-4">There is no modules.</h1>
+    <h1 class="btn btn-warning offset-4" style="margin-top: 90px;margin-bottom: 90px; width: 310px;">
+        <b>There is no modules.</b>
+    </h1>
 }

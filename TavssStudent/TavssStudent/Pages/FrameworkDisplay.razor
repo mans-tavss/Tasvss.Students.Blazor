@@ -72,6 +72,9 @@
                                                         <div class="custom-checkbox custom-control"> </div>
                                                     </div>
                                                     <div class="widget-content-left">
+                                                        @if (Framework.InProgress.Count() == 0)
+                                                        {<h6>No Tasks</h6>}
+
                                                         <div class="widget-heading ">
                                                             @inProgress.Name <div class="badge badge-info ml-2 offset-2 col-3">
                                                                 Start Date: @inProgress.StartDate.ToShortDateString()
@@ -86,6 +89,10 @@
                                         </li>
                                     }
                                     <a class="btn btn-primary" style="width:auto" href="@($"/addinprogress/{ProjectId}")">Add InProgress</a>
+                                }
+                                else
+                                {
+                                    <h6>No Tasks</h6>
                                 }
                             </ul>
                         </div>
@@ -120,6 +127,9 @@
                                                         <div class="custom-checkbox custom-control"> </div>
                                                     </div>
                                                     <div class="widget-content-left">
+                                                        @if (Framework.Dones.Count() == 0)
+                                                        {<h6>No Tasks</h6>}
+
                                                         <div class="widget-heading ">
                                                             @done.Name <div class="badge badge-info ml-2 offset-2 col-3">
                                                                 Start Date: @done.StartDate.ToShortDateString()
@@ -127,14 +137,22 @@
                                                         </div>
                                                         <div class="widget-subheading"><i>@done.Descreption</i></div>
                                                     </div>
-                                                    <div class="widget-content-right"><button class="border-0 btn-transition btn btn-outline-danger"
-                                                                                  @onclick="@(e=>DeleteDoneAsync(done.Id))"> <i class="fa fa-trash"></i> </button> </div>
+                                                    <div class="widget-content-right">
+                                                        <button class="border-0 btn-transition btn btn-outline-danger"
+                                                                @onclick="@(e=>DeleteDoneAsync(done.Id))">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </li>
 
                                     }
-                            <a class="btn btn-primary" style="width:auto" href="@($"/adddone/{ProjectId}")">Add done</a>
+                                    <a class="btn btn-primary" style="width:auto" href="@($"/adddone/{ProjectId}")">Add done</a>
+                                }
+                                else
+                                {
+                                    <h6>No Tasks</h6>
                                 }
                             </ul>
                         </div>

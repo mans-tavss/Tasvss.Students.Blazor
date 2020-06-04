@@ -1,6 +1,6 @@
 ﻿
 
-<div style="padding-top:75px;"id="demo" data-background="images/banner/banner-1.jpg" class="carousel slide" data-ride="carousel">
+<div id="demo" data-background="images/banner/banner-1.jpg" class="carousel slide" data-ride="carousel">
     <ul class="carousel-indicators">
         <li data-target="#demo" data-slide-to="0" class="active"></li>
         <li data-target="#demo" data-slide-to="1"></li>
@@ -10,22 +10,22 @@
         <div class="carousel-item active">
             <img src="/images/courses/course1.jpg" alt="Los Angeles" width="1100" height="500">
             <div class="carousel-caption text-info" style="margin-bottom: 350px;">
-                <h3>Tavss</h3>
-                <p>We had such a great courses in our Tavss Site!</p>
-            </div>
-        </div>
-        <div class="carousel-item">
-            <img src="/images/courses/course1.jpg" alt="Los Angeles" width="1100" height="500">
-            <div class="carousel-caption text-info" style="margin-bottom: 350px;">
-                <h3>Tavss</h3>
-                <p>We had such a great courses in our Tavss Site!</p>
+                <h2>Tavss</h2>
+                <h3>We have such a great courses in our Tavss Site!</h3>
             </div>
         </div>
         <div class="carousel-item">
             <img src="/images/courses/course1.jpg" alt="Los Angeles" width="1100" height="500">
             <div class="carousel-caption text-info" style="margin-bottom: 350px;">
                 <h2>Tavss</h2>
-                <p>We had such a great courses in our Tavss Site!</p>
+                <h3>We have such a great courses in our Tavss Site!</h3>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="/images/courses/course1.jpg" alt="Los Angeles" width="1100" height="500">
+            <div class="carousel-caption text-info" style="margin-bottom: 350px;">
+                <h2>Tavss</h2>
+                <h3>We have such a great courses in our Tavss Site!</h3>
             </div>
         </div>
     </div>
@@ -37,97 +37,3 @@
     </a>
 </div>
 
-
-<!-- hero slider -->@*
-    <section class="hero-section overlay bg-cover" data-background="images/banner/banner-1.jpg">
-        <div class="container">
-            <div class="hero-slider">
-                <!-- slider item -->
-                <div class="hero-slider-item">
-                    <div class="row">
-                        <div class="col-md-12 text-center">
-                            <h1 class="text-white text-center"> Let's Start Your Courses </h1>
-                            <p class="text-muted mb-4 text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
-                            <a href="/courses" class="btn btn-primary text-center">Courses</a>
-                        </div>
-                    </div>
-                </div>*@
-<!-- slider item -->
-@*<div class="hero-slider-item">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1 class="text-white text-center"> Projects For This Year </h1>
-                <p class="text-muted mb-4 text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
-                <a href="/projects" class="btn btn-primary text-center">Projects</a>
-            </div>
-        </div>
-    </div>*@
-<!-- slider item -->
-@*<div class="hero-slider-item">
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1 class="text-white text-center"> Discover External Communities </h1>
-                <p class="text-muted mb-4 text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
-                <a href="/communities" class="btn btn-primary text-center">Communities</a>
-            </div>
-        </div>
-    </div>*@@*
-    </div>
-    </div>
-    </section>*@
-    <!-- /hero slider -->
-    @*<BSCarousel NumberOfItems="@items.Count">
-            <BSCarouselIndicators NumberOfItems="@items.Count" >
-            <div class="carousel-inner">
-                @for (int i = 0; i < items.Count; i++)
-                {
-                    <BSCarouselItem src="@items[i].Source" alt="@items[i].Alt" />
-                }
-            </div>
-                </BSCarouselIndicators>
-            <BSCarouselControl CarouselDirection="CarouselDirection.Previous" NumberOfItems="@items.Count"></BSCarouselControl>
-            <BSCarouselControl CarouselDirection="CarouselDirection.Next" NumberOfItems="@items.Count"></BSCarouselControl>
-        </BSCarousel>*@
-
-    @*@code {
-            IList<Item> items = new List<Item>
-        {
-                new Item {
-                    Source = "...First Slide",
-                    Alt ="First Slide",
-                    Caption = "Slide 1",
-                    Header = "Slide 1 Header"
-                },
-                new Item {
-                    Source = "...Second Slide",
-                    Alt ="Second Slide",
-                    Caption = "Slide 2",
-                    Header = "Slide 2 Header"
-                },
-                new Item {
-                    Source = "...Third Slide",
-                    Alt ="Third Slide",
-                    Caption = "Slide 3",
-                    Header = "Slide 3 Header"
-                }
-            };
-
-            class Item
-            {
-                public string Source { get; set; }
-                public string Alt { get; set; }
-                public string Caption { get; set; }
-                public string Header { get; set; }
-            }
-        }*@
-
-
-    @*@code{
-            [Inject]
-            public IJSRuntime JsRuntime { get; set; }
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            await JsRuntime.InvokeAsync<object>("initializeCarousel.js");
-
-        }
-        }*@

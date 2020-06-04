@@ -1,29 +1,37 @@
-﻿
+﻿@page "/communities"
+@inherits DisplayCommunitiesBase
 
 
-<PageTitle />
-
+    <PageTitle Title="All Communities" ></PageTitle>
 <section class="section">
     <div class="container">
         <div class="row justify-content-center">
-            <!-- course item -->
-            @*@foreach (var item in collection)
+            @if (Communties == null)
             {
-                <div class="col-lg-4 col-sm-6 mb-5">
-                    <div class="card p-0 border-primary rounded-0 hover-shadow">
-                        <img class="card-img-top rounded-0" src="images/courses/course-1.jpg" alt="course thumb">
-                        <div class="card-body">
-                            <a href="Community-single.html">
-                                <h4 class="card-title project-name">Course Name</h4>
-                            </a>
-                            <div class="text-center">
-                                <a href="Community-single.html" class="btn btn-primary btn-sm">Start</a>
+                <h1 class="btn-outline-info offset-1">Loading</h1>
+            }
+            else
+            {
+                <!-- course item -->
+                @foreach (var community in Communties)
+                {
+                    <div class="col-lg-4 col-sm-6 mb-5" style="min-width: 18rem; max-width:30.5%;">
+                        <div class="card p-0 border-primary rounded-0 hover-shadow">
+                            <img class="card-img-top rounded-0" src="images/courses/course2.jpg" alt="@community.Name">
+                            <div class="card-body">
+                                <a href="Community-single.html">
+                                    <h4 class="card-title project-name">@community.Name</h4>
+                                    <p>@community.Description</p>
+                                </a>
+                                <div class="text-center">
+                                    <a href="@($"/communitydetails/{community.Id}")" class="btn btn-primary btn-sm">Discover</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }*@
-            <!-- /course item -->
+                }
+                <!-- /course item -->
+            }
         </div>
     </div>
 </section>
