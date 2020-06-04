@@ -9,36 +9,26 @@ using TavssStudent.Services;
 
 namespace TavssStudent.Pages
 {
-    public class CommunityDetailsBase:ComponentBase
+    public class DisplayPostsBase : ComponentBase
     {
+
         [Inject]
-        public ICommunityService CommunityService{ get; set; }
-        [Inject]
-        public ICourseService CourseService{ get; set; }
+        public ICommunityService CommunityService { get; set; }
 
         [Parameter]
         public string CommunityId { get; set; }
 
-        public CommunitiesDto Community { get; set; }
-
-        public Post Post { get; set; }
-        public Developer Developer { get; set; }
+        public IEnumerable<Post> Posts { get; set; }
         public List<Developer> Developers { get; set; }
 
-        public IEnumerable<MinCourseViewModel> Courses{ get; set; }
+        public Developer Developer { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected async override Task OnInitializedAsync()
         {
-            Community = await CommunityService.GetCommunity(CommunityId);
             LoadDeveloper();
-            if (Community.Posts.Count()!=0)
-            {
-                Post = Community.Posts.FirstOrDefault();
-                Developer = Developers.FirstOrDefault();
-
-            }
-            Courses   = await CourseService.GetCourses();
+            Posts = await CommunityService.GetAllPosts();
         }
+
         private void LoadDeveloper()
         {
             Developers = new List<Developer>()

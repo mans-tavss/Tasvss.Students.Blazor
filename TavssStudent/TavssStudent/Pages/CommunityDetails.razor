@@ -2,8 +2,8 @@
 @inherits CommunityDetailsBase
 <!-- page title -->
 <!-- /page title -->
+<PageTitle Title="Community Details"></PageTitle>
 
-<PageTitle Title="Community Details" Desc="@Community.Name"></PageTitle>
 
 
 @if (Community == null)
@@ -58,6 +58,44 @@ else
         </div>
     </section>
     <!-- /end course section -->
+
+    <!--Posts Section-->
+    <section class="section-sm" style="padding-top: 115px; padding-bottom: 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="d-flex align-items-center section-title justify-content-between">
+                        <h2 class="mb-0 text-nowrap mr-3">Posts</h2>
+                        <div class="border-top w-100 border-primary d-none d-sm-block"></div>
+                        <div>
+                            <a href="@($"posts/{CommunityId}")" style="width: 140px;" class="btn btn-sm btn-primary-outline ml-sm-3 d-none d-sm-block">See All</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- course list -->
+            <div class="card mb-4">
+                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                <div class="card-body">
+                    <h2 class="card-title">@Post.Title</h2>
+                    <p class="card-text">@Post.Description</p>
+                    <a href="#" class="btn btn-primary btn-sm">Read More →</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Posted on @Post.Time by
+                    <a href="#">@Developer.Name</a>
+                </div>
+            </div>
+            <!-- /course list -->
+            <!-- mobile see all button -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a href="courses.html" style="width: 140px;" class="btn btn-sm btn-primary-outline d-sm-none d-inline-block">See All</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Posts Section-->
 
     <!-- Compaies section -->
     <section class="section-sm">
