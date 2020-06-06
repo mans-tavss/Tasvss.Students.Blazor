@@ -4,72 +4,119 @@
 <PageTitle Title="Display All Posts"></PageTitle>
 
 
-    <!-- Page Content -->
-    <div class="container">
+<!-- Page Content -->
+<div class="container">
 
-        <div class="row">
+    <div class="row">
 
-            @if (Posts == null)
+        @if (Posts == null)
+        {
+            <h1 class="my-4">
+                Loading
+            </h1>
+            <div class="my-4">
+                <a class=" btn btn-primary" href="@($"/addpost/{CommunityId}")">Create Post</a>
+            </div>
+            @if (CommunityId != null)
             {
-                <h1 class="my-4">
-                    Loading
-                </h1>
+                <button @onclick="@QuickAddPost" class="btn btn-dark table-btn quick-add-btn ">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                <AddPostDialog CommunityId="@CommunityId" @ref="@AddPostDialog" CloseEventCallback="@AddPostDialog_OnDialogClose"></AddPostDialog>
+
             }
-            else
-            {
-                <!-- Blog Entries Column -->
-                <div class="col-md-8">
+        }
+        else
+        {
+            <!-- Blog Entries Column -->
+            <div class="col-md-8">
 
-                    <h1 class="my-4">
-                        Page Heading
-                        <small>Secondary Text</small>
-                    </h1>
+                <h1 class="my-4">
+                    Page Heading
+                    <small>Secondary Text</small>
+                    <small>
+                        <button @onclick="@QuickAddPost" class="btn btn-dark table-btn quick-add-btn ">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                        <AddPostDialog @ref="@AddPostDialog" CloseEventCallback="@AddPostDialog_OnDialogClose"></AddPostDialog>
+                    </small>
+                </h1>
 
-                    <!-- Blog Post -->
-                    @foreach (var post in Posts)
-                    {
-                        //750x300
-                        <div class="card mb-4">
-                            <img class="card-img-top" src="/images/blog/post-3.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <h2 class="card-title">@post.Title </h2>
-                                <p class="card-text">@post.Description</p>
-                            </div>
-                            <div class="card-footer text-muted">
-                                Posted on @post.Time by
-                                <a class="text-info" >@Developers.FirstOrDefault(d => d.Id == post.IssuerId).Name</a>
-                            </div>
+                <!-- Blog Post -->
+                @foreach (var post in Posts)
+                {
+                    //750x300
+                    <div class="card mb-4">
+                        @{
+                            if (post != null && post.Image != null && post.Image.Contains("wwwroot"))
+                            {
+                                Logo = post.Image.Split("wwwroot");
+                                //ProjectPath = project.ProjectPath.Split("wwwroot");
+
+                                <img class="card-img-top" src="@(Localhost + Logo[1])" alt="@post.Title">
+
+                            }
+                            else
+                            {
+
+                                <img class="card-img-top" src="/images/blog/post-3.jpg" alt="@post.Title">
+
+                            }
+                        }
+                        <div class="card-body">
+                            <h2 class="card-title">@post.Title </h2>
+                            <p class="card-text">@post.Description</p>
                         </div>
+                        <div class="card-footer text-muted">
+                            Posted on @post.Time by
+                            <a class="text-info">@Developers.FirstOrDefault(d => d.Id == post.IssuerId).Name</a>
+                        </div>
+                    </div>
+                }
+
+                <!-- Pagination -->
+                <ul class="pagination justify-content-center mb-4">
+                    @if (PageNumber <= 0)
+                    {
+                        <li class="page-item disabled">
+                            <Button class="page-link" @onclick="DecreasePage">&larr; Older</Button>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <Button class="page-link" @onclick="DecreasePage">&larr; Older</Button>
+                        </li>
                     }
 
-                    <!-- Pagination -->
-                    <ul class="pagination justify-content-center mb-4">
-                        <li class="page-item">
-                            <a class="page-link" href="#">&larr; Older</a>
-                        </li>
+                    @if (PageNumber >= PageCount)
+                    {
                         <li class="page-item disabled">
-                            <a class="page-link" href="#">Newer &rarr;</a>
+                            <Button class="page-link" @onclick="IncreasePage">Newer &rarr;</Button>
                         </li>
-                    </ul>
-
-                </div>
-
-            }
-
-            <!-- Sidebar Widgets Column -->
-            <div class="col-md-4">
-
-                <!-- Side Widget -->
-                <div class="card my-4">
-                    <h5 class="card-header">Side Widget</h5>
-                    <div class="card-body">
-                        You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-                    </div>
-                </div>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <Button class="page-link" @onclick="IncreasePage">Newer &rarr;</Button>
+                        </li>
+                    }
+                </ul>
 
             </div>
 
+        }
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Side Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Side Widget</h5>
+                <div class="card-body">
+                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                </div>
+            </div>
+
         </div>
-        <!-- /.row -->
 
     </div>
+    <!-- /.row -->
+
+</div>

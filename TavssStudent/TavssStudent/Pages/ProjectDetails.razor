@@ -1,17 +1,12 @@
 ﻿@page "/projectdetails/{ProjectId}"
 @inherits ProjectDetailsBase
-    <!-- page title -->
+
+<!-- page title -->
 <PageTitle Title="Details for project" Desc="@Project.ProjectName"></PageTitle>
-<!-- /page title -->
+<!-- /page title --> 
 <!-- section -->
 <section class="section-sm">
     <div class="container">
-        <div class="row">
-            <div class="col-12 mb-4">
-                <!-- course thumb -->
-                <!-- <img src="../../../assets/images/courses/course-single.jpg" class="img-fluid w-100" alt="project's image"> -->
-            </div>
-        </div>
         <!-- course info -->
         <div class="row align-items-center mb-5">
             <div class="col-xl-3 order-1 col-sm-6 mb-4 mb-xl-0">
@@ -55,7 +50,16 @@
             </div>
         </div>
         <!-- project details -->
-
+        <div class="row">
+            <div class="col-6  offset-3 mb-4">
+                <!-- course thumb -->
+                @if (Project != null && Logo != null)
+                {
+                    <img src="@(Localhost + Logo[1])" style="height:250px;"
+                         class="img-fluid w-100" alt="project's image">
+                }
+            </div>
+        </div>
     </div>
 </section>
 <!-- /section -->
@@ -75,13 +79,13 @@
     {
         <a class="btn btn-primary" style="margin:70px 70px;width:400px" href="@($"/addtodo/{ProjectId}")">add todo</a>
     }
-    
+
 
 }
 @if (Project.Framework == null)
 {
     <div>
-        <a class="btn btn-primary col align-self-center" style="margin:70px 70px;width:400px"  @onclick="CreateFrameworkAsync"> Create Framework</a>
+        <a class="btn btn-primary col align-self-center" style="margin:70px 70px;width:400px" @onclick="CreateFrameworkAsync"> Create Framework</a>
     </div>
 }
 else

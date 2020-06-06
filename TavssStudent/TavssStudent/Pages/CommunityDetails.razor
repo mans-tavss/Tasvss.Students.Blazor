@@ -1,14 +1,22 @@
 ﻿@page "/communitydetails/{CommunityId}"
 @inherits CommunityDetailsBase
+@{
+    var localhost = SD.CourseLocalhost;
+}
+
 <!-- page title -->
-<!-- /page title -->
 <PageTitle Title="Community Details"></PageTitle>
+<!-- /page title -->
 
 
 
 @if (Community == null)
 {
-    <h1>Loading</h1>
+    <h1>Loading
+    </h1>
+    <div class="spinner d-inline-block"></div>
+
+
 }
 else
 {
@@ -34,12 +42,32 @@ else
                 }
                 else
                 {
+
                     @foreach (var course in Courses)
                     {
                         <!-- course item -->
                         <div class="col-lg-4 col-sm-6 mb-5">
                             <div class="card p-0 border-primary rounded-0 hover-shadow">
-                                <img class="card-img-top rounded-0" src="images/courses/course1.jpg" alt="course thumb">
+                                @{
+                                    if (course != null && course.LogoPath != null && course.LogoPath.Contains("wwwroot"))
+                                    {
+                                        Logo = course.LogoPath.Split(@"wwwroot\");
+
+                                        <a href="@($"/coursedetails/{course.Id}")">
+                                            <img class="card-img-top rounded-0" style="width:260px;height:220px"
+                                                 asp-append-version="true" src="@(localhost + Logo[1])" alt="@course.Name">
+                                        </a>
+                                    }
+                                    else
+                                    {
+
+                                        <a href="@($"/coursedetails/{course.Id}")">
+                                            <img class="card-img-top rounded-0" style="width:260px;height:220px"
+                                                 src="images/courses/course1.jpg" alt="@course.Name">
+                                        </a>
+
+                                    }
+                                }
                                 <div class="card-body">
                                     <a href="course-lectures.html">
                                         <h4 class="card-title">@course.Name</h4>
@@ -75,28 +103,43 @@ else
             </div>
             <!-- course list -->
             <div class="card mb-4">
-                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-                <div class="card-body">
-                    <h2 class="card-title">@Post.Title</h2>
-                    <p class="card-text">@Post.Description</p>
-                    <a href="#" class="btn btn-primary btn-sm">Read More →</a>
-                </div>
-                <div class="card-footer text-muted">
-                    Posted on @Post.Time by
-                    <a href="#">@Developer.Name</a>
-                </div>
+                @if (Post != null)
+                {
+                    @if (Path != null)
+                    {
+                        <img class="card-img-top" src="@(Localhost + Path[1])" alt="@Post.Title">
+
+                    }
+                    else
+                    {
+                        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                    }
+                    <div class="card-body">
+                        <h2 class="card-title">@Post.Title</h2>
+                        <p class="card-text">@Post.Description.Take(30)</p>
+                    </div>
+                    <div class="card-footer text-muted">
+                        Posted on @Post.Time by
+                        <a href="#">@Developer.Name</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-body">
+                        <h2 class="card-title">No Posts</h2>
+                    </div>
+                }
             </div>
             <!-- /course list -->
             <!-- mobile see all button -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <a href="courses.html" style="width: 140px;" class="btn btn-sm btn-primary-outline d-sm-none d-inline-block">See All</a>
+                    <a href="@($"/posts/{CommunityId}")" style="width: 140px;" class="btn btn-sm btn-primary-outline d-sm-none d-inline-block">See All</a>
                 </div>
             </div>
         </div>
     </section>
     <!--Posts Section-->
-
     <!-- Compaies section -->
     <section class="section-sm">
         <div class="container">
@@ -123,7 +166,20 @@ else
                         <!-- course item -->
                         <div class=" col-sm-6 mb-5" style="width: 500px">
                             <div class="card p-0 border-primary rounded-0 hover-shadow">
-                                <img class="card-img-top rounded-0" src="images/courses/course-1.jpg" alt="@company.Name">
+                                @{
+                                    if (company != null && company.LogoPath != null && company.LogoPath.Contains("wwwroot"))
+                                    {
+                                        Logo = company.LogoPath.Split(@"wwwroot\");
+
+                                        <img class="card-img-top rounded-0" style="width:410px;height:340px"
+                                             asp-append-version="true" src="@(Localhost + Logo[1])" alt="@company.Name">
+                                    }
+                                    else
+                                    {
+                                        <img class="card-img-top rounded-0" style="width:410px;height:340px"
+                                             src="images/courses/course-1.jpg" alt="@company.Name">
+                                    }
+                                }
                                 <div class="card-body">
                                     <h4 class="d-none d-sm-block">Name</h4>
                                     <p class="card-text mb-4"> @company.Name </p>

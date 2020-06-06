@@ -9,7 +9,7 @@ else
 {
     <!-- page title -->
 
-<PageTitle Title="Course Details" Desc="@Course.Name"></PageTitle>
+    <PageTitle Title="Course Details" Desc="@Course.Name"></PageTitle>
     <!-- /page title -->
 }
 @if (Course.Modules.Count > 0)
@@ -22,7 +22,24 @@ else
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" asp-append-version="true" src="images/courses/CousesLogo.jpg" alt="course thumb">
+                            @{
+                                if (modeule != null && modeule.LogoPath != null && modeule.LogoPath.Contains("wwwroot"))
+                                {
+                                    Logo = modeule.LogoPath.Split(@"wwwroot\");
+                                    //ProjectPath = project.ProjectPath.Split("wwwroot");
+
+                                    <a href="@($"/moduledetails/{Course.Id}/{modeule.Id}")">
+                                        <img class="card-img-top" src="@(Localhost + Logo[1])" alt="@modeule.Name">
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@($"/moduledetails/{Course.Id}/{modeule.Id}")">
+                                        <img class="card-img-top rounded-0" asp-append-version="true" src="images/courses/CousesLogo.jpg" alt="@modeule.Name">
+                                    </a>
+
+                                }
+                            }
                             <div class="card-body">
                                 <a href="course-single.html">
                                     <h4 class="card-title">@modeule.Name</h4>

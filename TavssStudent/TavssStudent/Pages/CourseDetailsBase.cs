@@ -22,6 +22,10 @@ namespace TavssStudent.Pages
         [Parameter]
         public string CourseId { get; set; }
 
+        public string[] Logo { get; set; }
+        public string[] Path { get; set; }
+        public string Localhost { get; set; } = SD.CourseLocalhost;
+
         protected async override Task OnInitializedAsync()
         {
             Course = await CourseService.GetCourseById(CourseId);

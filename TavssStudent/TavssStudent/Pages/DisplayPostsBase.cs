@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TavssStudent.Components;
 using TavssStudent.Models;
 using TavssStudent.Services;
 
@@ -15,18 +17,64 @@ namespace TavssStudent.Pages
         [Inject]
         public ICommunityService CommunityService { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
         [Parameter]
         public string CommunityId { get; set; }
 
+        public IEnumerable<Post> AllPosts { get; set; }
         public IEnumerable<Post> Posts { get; set; }
+        public int PostsCount { get; set; }
         public List<Developer> Developers { get; set; }
 
         public Developer Developer { get; set; }
 
+        public string[] Logo { get; set; }
+        public string[] Path { get; set; }
+        public string Localhost { get; set; } = SD.CommunityLocalhost;
+        public int PageCount { get; set; }
+        public int PageNumber { get; set; } = 0;
+        public int PageSize { get; set; } = 9;
+
         protected async override Task OnInitializedAsync()
         {
             LoadDeveloper();
-            Posts = await CommunityService.GetAllPosts();
+            AllPosts =( await CommunityService.GetAllPosts()).ToList().OrderByDescending(d=>d.Time);
+            PostsCount = AllPosts.Count();
+            PageCount = PostsCount / 9;
+            Posts = AllPosts.Skip(PageNumber * PageSize).Take(PageSize);
+        }
+        protected void IncreasePage()
+        {
+            PageNumber = ++PageNumber;
+            if (PageNumber>PageCount)
+            {
+                Posts = Posts;
+            }
+            else
+            {
+                //Posts = await CommunityService.GetAllPosts();
+                Posts = AllPosts.Skip(PageNumber * PageSize).OrderByDescending(d => d.Time).Take(PageSize);
+                StateHasChanged();
+                NavigationManager.NavigateTo($"/posts/{CommunityId}");
+            }
+            
+        }
+        protected void DecreasePage()
+        {
+            PageNumber = --PageNumber;
+            if (PageNumber<0)
+            {
+                Posts = Posts;
+            }
+            else
+            {
+                //Posts = await CommunityService.GetAllPosts();
+                Posts = AllPosts.Skip(PageNumber * PageSize).OrderByDescending(d => d.Time).Take(PageSize);
+                StateHasChanged();
+                NavigationManager.NavigateTo($"/posts/{CommunityId}");
+            }
         }
 
         private void LoadDeveloper()
@@ -44,6 +92,25 @@ namespace TavssStudent.Pages
                      Name="Ahmed"
                 }
             };
+        }
+
+        public AddPostDialogBase AddPostDialog { get; set; }
+        protected void QuickAddPost()
+        {
+            AddPostDialog.Show();
+        }
+        public async void AddPostDialog_OnDialogClose()
+        {
+            LoadDeveloper();
+            AllPosts = (await CommunityService.GetAllPosts()).ToList().OrderBy(d=>d.Time);
+            PostsCount = AllPosts.Count();
+            PageCount = PostsCount / 9;
+            Posts = AllPosts.Skip(PageNumber * PageSize).Take(PageSize);
+            StateHasChanged();
+        }
+        protected void SaveId()
+        {
+            CommunityId = CommunityId;
         }
     }
 }

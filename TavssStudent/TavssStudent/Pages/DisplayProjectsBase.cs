@@ -14,9 +14,13 @@ namespace TavssStudent.Pages
         [Inject]
         public IProjectService ProjectService{ get; set; }
         public IEnumerable<Project> Projects { get; set; }
+        public string[] Logo { get; set; }
+        public string[] ProjectPath { get; set; }
+        public string Localhost { get; set; } = SD.ProjectLocalhost;
         protected async override Task OnInitializedAsync()
         {
             Projects = await ProjectService.GetAllProjects();
+            
         }
     }
 }

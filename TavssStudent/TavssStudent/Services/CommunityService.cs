@@ -19,7 +19,9 @@ namespace TavssStudent.Services
         }
         public async Task<bool> CreatePost(string CID, InsertPostViewModel model)
         {
-           await httpClient.PutJsonAsync<InsertPostViewModel>($"", model);
+            CID = "5ed7e2b2a36b653a1802aa9f";
+            model.IssuerId = "mohamed";
+           await httpClient.PutJsonAsync<InsertPostViewModel>($"api/v1/Community/CreatePost/{CID}", model);
             return true;
         }
 

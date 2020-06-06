@@ -30,6 +30,9 @@ namespace TavssStudent.Pages
         {
             Topics=new List<Topic>()
         };
+        public string[] Logo { get; set; }
+        public string[] ProjectPath { get; set; }
+        public string Localhost { get; set; } = SD.ProjectLocalhost;
 
         protected async override Task OnInitializedAsync()
         {

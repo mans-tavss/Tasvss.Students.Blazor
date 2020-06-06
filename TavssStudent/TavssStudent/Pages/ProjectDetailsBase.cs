@@ -19,6 +19,10 @@ namespace TavssStudent.Pages
         public string ProjectId { get; set; }
         public int Duration { get; set; }
 
+        public string[] Logo { get; set; }
+        public string[] ProjectPath { get; set; }
+        public string Localhost { get; set; } = SD.ProjectLocalhost;
+
         public Project Project { get; set; } = new Project()
         {
             Developer = new List<Developer>(),
@@ -31,6 +35,11 @@ namespace TavssStudent.Pages
         protected async override Task OnInitializedAsync()
         {
             Project = await ProjectService.GetProjectById(ProjectId);
+            if (Project.ProjectLogo != null && Project.ProjectLogo.Contains("wwwroot") )
+            {
+                Logo = Project.ProjectLogo.Split("wwwroot");
+                ProjectPath = Project.ProjectPath.Split("wwwroot");
+            }
             if (Project.SuperVisior == null)
             {
                 Project.SuperVisior = new SuperVisor { Name = "No Doctor yet." };

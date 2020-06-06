@@ -9,12 +9,12 @@ using TavssStudent.Services;
 
 namespace TavssStudent.Pages
 {
-    public class CommunityDetailsBase:ComponentBase
+    public class CommunityDetailsBase : ComponentBase
     {
         [Inject]
-        public ICommunityService CommunityService{ get; set; }
+        public ICommunityService CommunityService { get; set; }
         [Inject]
-        public ICourseService CourseService{ get; set; }
+        public ICourseService CourseService { get; set; }
 
         [Parameter]
         public string CommunityId { get; set; }
@@ -25,19 +25,28 @@ namespace TavssStudent.Pages
         public Developer Developer { get; set; }
         public List<Developer> Developers { get; set; }
 
-        public IEnumerable<MinCourseViewModel> Courses{ get; set; }
+        public IEnumerable<MinCourseViewModel> Courses { get; set; }
+        public string[] Logo { get; set; }
+        public string[] Path { get; set; }
+        public string Localhost { get; set; } = SD.CommunityLocalhost;
 
         protected override async Task OnInitializedAsync()
         {
             Community = await CommunityService.GetCommunity(CommunityId);
             LoadDeveloper();
-            if (Community.Posts.Count()!=0)
+            if (Community.Posts.Count() != 0)
             {
                 Post = Community.Posts.FirstOrDefault();
                 Developer = Developers.FirstOrDefault();
 
             }
-            Courses   = await CourseService.GetCourses();
+            if (Post !=null && Post.Image != null && Post.Image.Contains("wwwroot"))
+            {
+                Logo = Post.Image.Split("wwwroot");
+                Path = Post.Image.Split("wwwroot");
+            }
+
+            Courses = await CourseService.GetCourses();
         }
         private void LoadDeveloper()
         {

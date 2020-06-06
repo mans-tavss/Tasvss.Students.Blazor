@@ -19,6 +19,9 @@ namespace TavssStudent.Pages
 
         public IEnumerable<Company> Companies{ get; set; }
 
+        public string[] Logo { get; set; }
+        public string[] Path { get; set; }
+        public string Localhost { get; set; } = SD.CommunityLocalhost;
         protected override async Task OnInitializedAsync()
         {
             Companies = await CommunityService.GetCommunityCompanies(CommunityId);

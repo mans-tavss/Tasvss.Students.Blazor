@@ -2,13 +2,14 @@
 @inherits DisplayCommunitiesBase
 
 
-    <PageTitle Title="All Communities" ></PageTitle>
+<PageTitle Title="All Communities"></PageTitle>
 <section class="section">
     <div class="container">
         <div class="row justify-content-center">
             @if (Communties == null)
             {
-                <h1 class="btn-outline-info offset-1">Loading</h1>
+                <div class="spinner"></div>
+
             }
             else
             {
@@ -17,9 +18,11 @@
                 {
                     <div class="col-lg-4 col-sm-6 mb-5" style="min-width: 18rem; max-width:30.5%;">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="images/courses/course2.jpg" alt="@community.Name">
+                            <a href="@($"/communitydetails/{community.Id}")">
+                                <img class="card-img-top rounded-0" src="images/courses/course2.jpg" alt="@community.Name">
+                            </a>
                             <div class="card-body">
-                                <a href="Community-single.html">
+                                <a href="@($"/communitydetails/{community.Id}")">
                                     <h4 class="card-title project-name">@community.Name</h4>
                                     <p>@community.Description</p>
                                 </a>

@@ -30,18 +30,18 @@ namespace TavssStudent
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(option => option.DetailedErrors = true);
             //services.AddBootstrapCss();
-
+            services.AddAuthentication("Identity.Application").AddCookie();
             services.AddHttpClient<ICourseService,CourseService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7002/");
+                client.BaseAddress = new Uri(SD.CourseLocalhost);
             });
             services.AddHttpClient<IProjectService,ProjectService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:7001/");
+                client.BaseAddress = new Uri(SD.ProjectLocalhost);
             });
             services.AddHttpClient<ICommunityService,CommunityService>(client =>
             {
-                client.BaseAddress = new Uri("https://localhost:8001/");
+                client.BaseAddress = new Uri(SD.CommunityLocalhost);
             });
         }
 
@@ -63,7 +63,8 @@ namespace TavssStudent
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();

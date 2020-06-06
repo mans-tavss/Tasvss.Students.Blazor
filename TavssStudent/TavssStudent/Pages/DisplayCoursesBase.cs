@@ -16,6 +16,9 @@ namespace TavssStudent.Pages
 
         public IEnumerable<MinCourseViewModel> Courses{ get; set; }
 
+        public string[] Logo { get; set; }
+        public string[] Path { get; set; }
+        public string Localhost { get; set; } = SD.CourseLocalhost;
         protected async override Task OnInitializedAsync()
         {
             Courses = await CourseService.GetCourses();

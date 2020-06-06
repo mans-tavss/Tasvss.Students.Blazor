@@ -1,7 +1,7 @@
 ﻿@page "/projects"
 @inherits DisplayProjectsBase
 <!-- page title -->
-    <PageTitle Title="All Project" Desc="Display all projects"></PageTitle>
+<PageTitle Title="All Project" Desc="Display all projects"></PageTitle>
 <!-- /page title -->
 <!-- Projects -->
 <section class="section">
@@ -14,9 +14,29 @@
                     <!-- project item -->
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="images/courses/course-3.jpg" alt="@project.ProjectName">
+                            @{
+                                if (project != null && project.ProjectLogo != null)
+                                {
+                                    Logo = project.ProjectLogo.Split("wwwroot");
+                                    //ProjectPath = project.ProjectPath.Split("wwwroot");
+                                    <a href="@($"/projectdetails/{project.Id}")">
+                                        <img class="card-img-top rounded-0"
+                                             style="width:260px;height:220px"
+                                             src="@(Localhost + Logo[1])" alt="@project.ProjectName">
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@($"/projectdetails/{project.Id}")">
+                                        <img class="card-img-top rounded-0"
+                                             style="width:260px;height:220px"
+                                             src="/images/courses/course-2.jpg" alt="@project.ProjectName">
+                                    </a>
+
+                                }
+                            }
                             <div class="card-body">
-                                <a href="project-single.html">
+                                <a href="@($"/projectdetails/{project.Id}")">
                                     <h4 class="card-title project-name">@project.ProjectName</h4>
                                 </a>
                                 <div class="text-center">
@@ -30,7 +50,9 @@
             }
             else
             {
-                <h1>Loading</h1>
+                
+                <div class="spinner"></div>
+
             }
             <div style="margin-left: 200px; margin-right: 200px;" class="col-lg-6 col-sm-6 mb-5 text-center">
                 <a href="/addproject" class="btn btn-primary btn-xl">New Project</a>

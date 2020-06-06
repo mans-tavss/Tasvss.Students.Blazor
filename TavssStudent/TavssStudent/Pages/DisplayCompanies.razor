@@ -25,7 +25,20 @@
                     <!-- course item -->
                     <div class=" col-sm-6 mb-5" style="width: 500px">
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
-                            <img class="card-img-top rounded-0" src="images/courses/course-1.jpg" alt="@company.Name">
+                            @{
+                                if (company != null && company.LogoPath != null && company.LogoPath.Contains("wwwroot"))
+                                {
+                                    Logo = company.LogoPath.Split("wwwroot");
+                                    //ProjectPath = project.ProjectPath.Split("wwwroot");
+
+                                    <img class="card-img-top" style="width:410px;height:340px" src="@(Localhost + Logo[1])" alt="@company.Name">
+
+                                }
+                                else
+                                {
+                                    <img class="card-img-top rounded-0" src="images/courses/course-1.jpg" alt="@company.Name">
+                                }
+                            }
                             <div class="card-body">
                                 <h4 class="d-none d-sm-block">Name</h4>
                                 <p class="card-text mb-4"> @company.Name </p>
