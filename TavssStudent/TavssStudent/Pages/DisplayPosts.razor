@@ -1,5 +1,6 @@
 ﻿@page "/posts/{CommunityId}"
 @inherits DisplayPostsBase
+@attribute [Authorize]
 
 <PageTitle Title="Display All Posts"></PageTitle>
 
@@ -15,7 +16,7 @@
                 Loading
             </h1>
             <div class="my-4">
-                <a class=" btn btn-primary" href="@($"/addpost/{CommunityId}")">Create Post</a>
+                <a class=" btn btn-primary" href="@($"/addpost/{CommunityId}")">Add Post</a>
             </div>
             @if (CommunityId != null)
             {
@@ -30,14 +31,16 @@
             <div class="col-md-8">
 
                 <h1 class="my-4">
-                    Page Heading
-                    <small>Secondary Text</small>
-                    <small>
-                        <button @onclick="@QuickAddPost" class="btn btn-dark table-btn quick-add-btn ">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
-                        <AddPostDialog @ref="@AddPostDialog" CloseEventCallback="@AddPostDialog_OnDialogClose"></AddPostDialog>
-                    </small>
+                    @Title
                 </h1>
+                <h4 style="padding: 0px 0px;">
 
+                    <button @onclick="@QuickAddPost" style="padding: 0px 0px;"
+                            class="btn btn-info table-btn quick-add-btn ">
+                        &nbsp;Add Post &nbsp;+&nbsp;&nbsp;
+                    </button>
+                    <AddPostDialog @ref="@AddPostDialog" CloseEventCallback="@AddPostDialog_OnDialogClose"></AddPostDialog>
+                </h4>
                 <!-- Blog Post -->
                 @foreach (var post in Posts)
                 {

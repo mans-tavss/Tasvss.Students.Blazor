@@ -44,5 +44,10 @@ namespace TavssStudent.Services
             return await httpClient.GetJsonAsync<Module>($"api/v1/studentcourse/getmodulebyid/{CID}/{MID}");
 
         }
+
+        public async Task<Topic> GetTopicById(string CID, string MID, string TID)
+        {
+            return await httpClient.GetJsonAsync<Topic>($"api/v1/StudentCourse/GetTopicById/{CID}/{MID}/{TID}");
+        }
     }
 }

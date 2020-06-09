@@ -15,6 +15,7 @@ namespace TavssStudent.Pages
         public Framework FrameworkParm { get; set; }
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
         [Parameter]
         public EventCallback<string> OnProjectDeleted { get; set; }
         public Framework Framework { get; set; } = new Framework()
@@ -37,21 +38,23 @@ namespace TavssStudent.Pages
         protected async Task DeleteToDoAsync(string todoId)
         {
             await ProjectService.RemoveToDOFromProject(ProjectId, todoId);
-            StateHasChanged();
             await OnProjectDeleted.InvokeAsync(ProjectId);
-            //NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
+            //StateHasChanged();
+            NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
         }
         protected async Task DeleteInProgressAsync(string inprogressId)
         {
             await ProjectService.RemoveInProgressFromProject(ProjectId, inprogressId);
-            StateHasChanged();
             await OnProjectDeleted.InvokeAsync(ProjectId);
+            //StateHasChanged();
+            NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
         }
         protected async Task DeleteDoneAsync(string doneId)
         {
             await ProjectService.RemoveDoneFromProject(ProjectId, doneId);
-            StateHasChanged();
             await OnProjectDeleted.InvokeAsync(ProjectId);
+            //StateHasChanged();
+            NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
         }
     }
 }

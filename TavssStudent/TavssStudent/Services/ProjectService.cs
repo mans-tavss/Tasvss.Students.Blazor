@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorInputFile;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -192,6 +196,35 @@ namespace TavssStudent.Services
         {
             await httpClient.DeleteAsync($"api/MongoProject/api/v1/project/RemoveDoneFromProject/{projectId}/{doneId}");
             return true;
+        }
+
+        public async Task<bool> UploadProject(string projectId, IFileListEntry files)
+        {
+            //await httpClient.PutJsonAsync<Developer>($"api/MongoProject/api/v1/project/UploadProject/{projectId}", project);
+
+            //StringContent modelJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            //var response = await httpClient.PutAsync($"api/MongoProject/api/v1/project/AddSuperVisorToProject/{projectId}/{SuperVisorName}", null);
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    return true;
+            //}
+            //return false;
+            var file = files;
+            if (file != null)
+            {
+                var ms = new MemoryStream();
+                await file.Data.CopyToAsync(ms);
+                var content = new MultipartFormDataContent {
+                { new ByteArrayContent(ms.GetBuffer()), "\"upload\"", file.Name }};
+                var response = await httpClient.PutAsync($"api/MongoProject/api/v1/project/UploadProject/{projectId}", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                return false;
+            }
+                return false;
+
         }
 
         #endregion

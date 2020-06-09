@@ -46,7 +46,7 @@ namespace TavssStudent.Pages
                 Path = Post.Image.Split("wwwroot");
             }
 
-            Courses = await CourseService.GetCourses();
+            Courses = (await CourseService.GetCourses()).ToList().TakeLast(3);
         }
         private void LoadDeveloper()
         {

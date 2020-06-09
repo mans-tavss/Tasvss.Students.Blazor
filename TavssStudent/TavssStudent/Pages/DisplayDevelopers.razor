@@ -1,7 +1,9 @@
 ﻿@page "/developers/{CommunityId}"
 @inherits DisplayDevelopersBase
+@attribute [Authorize]
 
-    <PageTitle Title="All Developers" Desc="Display all developers"></PageTitle>
+
+<PageTitle Title="All Developers" Desc="Display all developers"></PageTitle>
 <!--developer section-->
 <section class="section-sm" style="padding-top: 115px; padding-bottom: 20px;">
     <div class="container">

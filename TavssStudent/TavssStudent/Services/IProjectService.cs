@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BlazorInputFile;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +29,7 @@ namespace TavssStudent.Services
         Task CreateFramework(string projectId);
         Task AddDeveloperToProject(string projectId, Developer developer);
         Task<bool> AddSuperVisorToProject(string projectId, SuperVisor superVisor);
+        Task<bool> UploadProject(string projectId, IFileListEntry files);
 
         //Put
         Task<bool> AssignToDo(string projectId, ToDoViewModel model);

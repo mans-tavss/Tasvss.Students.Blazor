@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using TavssStudent.Services;
 
 namespace TavssStudent
@@ -29,8 +30,15 @@ namespace TavssStudent
         {
             services.AddRazorPages();
             services.AddServerSideBlazor().AddCircuitOptions(option => option.DetailedErrors = true);
-            //services.AddBootstrapCss();
-            services.AddAuthentication("Identity.Application").AddCookie();
+            //services.AddBootstrapCss();"Identity.Application",
+            services.AddAuthentication(
+                options=> 
+                {
+                    options.DefaultScheme = "Identity.Application";
+                    options.DefaultSignInScheme = "/identity/account/login";
+                    options.DefaultSignOutScheme= "/identity/account/logout";
+                    options.RequireAuthenticatedSignIn = true;
+                }).AddCookie();
             services.AddHttpClient<ICourseService,CourseService>(client =>
             {
                 client.BaseAddress = new Uri(SD.CourseLocalhost);

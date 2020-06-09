@@ -1,8 +1,11 @@
 ﻿@page "/communitydetails/{CommunityId}"
 @inherits CommunityDetailsBase
+@attribute [Authorize]
+
 @{
     var localhost = SD.CourseLocalhost;
 }
+<link href="~/font-awesome/css/fontawesome.css" rel="stylesheet" />
 
 <!-- page title -->
 <PageTitle Title="Community Details"></PageTitle>
@@ -12,7 +15,8 @@
 
 @if (Community == null)
 {
-    <h1>Loading
+    <h1>
+        Loading
     </h1>
     <div class="spinner d-inline-block"></div>
 
@@ -83,12 +87,18 @@ else
                 }
             </div>
             <!-- /course list -->
+            <!-- mobile see all button -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a href="@($"/courses")" style="width: 140px;" class="btn btn-sm btn-primary-outline d-sm-none d-inline-block">See All</a>
+                </div>
+            </div>
         </div>
     </section>
     <!-- /end course section -->
 
     <!--Posts Section-->
-    <section class="section-sm" style="padding-top: 115px; padding-bottom: 20px;">
+    <section class="section-sm" style="padding-top: initial; padding-bottom: 20px;">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -116,7 +126,7 @@ else
                     }
                     <div class="card-body">
                         <h2 class="card-title">@Post.Title</h2>
-                        <p class="card-text">@Post.Description.Take(30)</p>
+                        <p class="card-text">@Post.Description</p>
                     </div>
                     <div class="card-footer text-muted">
                         Posted on @Post.Time by
@@ -190,19 +200,27 @@ else
                                     <h6 class="d-none d-sm-block">Start Date</h6>
                                     <p class="card-text mb-4"> @company.StartDate.ToShortDateString()</p>
                                     <div class="social-link">
-                                        <h6 class="d-none d-sm-block">Social Link</h6>
+                                        <h6 class="d-none d-sm-block">Social Links</h6>
                                         <ul class="list-inline">
-                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="ti-facebook"></i></a></li>
-                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="ti-twitter-alt"></i></a></li>
-                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="https://twitter.com/Lionelmido004"><i class="ti-linkedin"></i></a></li>
-                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="ti-instagram"></i></a></li>
+                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="https://twitter.com/Lionelmido004"><i class="fa fa-twitter"></i></a></li>
+                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-facebook-square"></i></a></li>
+                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-github"></i></a></li>
+                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-linkedin-square"></i></a></li>
+                                            <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-instagram"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- course item -->
+                        <!-- company item -->
+
                     }
+                    <!-- mobile see all button -->
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <a href="@($"/companies/{Community.Id}")" style="width: 140px;" class="btn btn-sm btn-primary-outline d-sm-none d-inline-block">See All</a>
+                        </div>
+                    </div>
                 }
             </div>
         </div>
@@ -249,10 +267,11 @@ else
                                         <div class="social-link">
                                             <h6 class="d-none d-sm-block">Social Link</h6>
                                             <ul class="list-inline">
-                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="ti-facebook"></i></a></li>
-                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="ti-twitter-alt"></i></a></li>
-                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="ti-linkedin"></i></a></li>
-                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="ti-instagram"></i></a></li>
+                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-twitter"></i></a></li>
+                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-facebook-square"></i></a></li>
+                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-github"></i></a></li>
+                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-linkedin-square"></i></a></li>
+                                                <li class="list-inline-item"><a class="d-inline-block text-light p-1" href="#"><i class="fa fa-instagram"></i></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -269,7 +288,7 @@ else
             <!-- mobile see all button -->
             <div class="row">
                 <div class="col-12 text-center">
-                    <a href="courses.html" style="width: 140px;" class="btn btn-sm btn-primary-outline d-sm-none d-inline-block">See All</a>
+                    <a href="@($"/developers/{Community.Id}")" style="width: 140px;" class="btn btn-sm btn-primary-outline d-sm-none d-inline-block">See All</a>
                 </div>
             </div>
         </div>

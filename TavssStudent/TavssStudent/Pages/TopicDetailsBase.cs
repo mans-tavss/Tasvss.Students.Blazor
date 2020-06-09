@@ -9,7 +9,7 @@ using TavssStudent.Services;
 
 namespace TavssStudent.Pages
 {
-    public class ModuleDetailsBase:ComponentBase
+    public class TopicDetailsBase:ComponentBase
     {
         [Inject]
         public ICourseService CourseService { get; set; }
@@ -17,35 +17,33 @@ namespace TavssStudent.Pages
         public NavigationManager NavigationManager { get; set; }
         [Parameter]
         public string CourseId { get; set; }
-        public CourseDto Course { get; set; } = new CourseDto()
-        {
-            Doctors=new List<Doctor>(),
-            Modules=new List<Module>(),
-            Students=new List<Student>()
-        };
-
         [Parameter]
         public string ModeuleId { get; set; }
-        public Module Module { get; set; } = new Module()
-        {
-            Topics=new List<Topic>()
-        };
+        [Parameter]
+        public string TopicId { get; set; }
+        public Topic Topic { get; set; }
+        public IEnumerable<Topic> Topics { get; set; }
         public string[] Logo { get; set; }
         public string[] TopicPath { get; set; }
         public string Localhost { get; set; } = SD.CourseLocalhost;
 
         protected async override Task OnInitializedAsync()
         {
-            Module = await CourseService.GetModuleById(CourseId, ModeuleId);
-            if (Module.Topics!=null &&Module.Topics.FirstOrDefault().Path!=null)
+            Topic = await CourseService.GetTopicById(CourseId, ModeuleId,TopicId);
+            if (Topic != null && Topic.Path != null)
             {
-                TopicPath = Module.Topics.FirstOrDefault().Path.Split("wwwroot");
+                TopicPath = Topic.Path.Split("wwwroot");
             }
-            Course = await CourseService.GetCourseById(CourseId);
+            Topics = (await CourseService.GetModuleById(CourseId, ModeuleId)).Topics.Where(t=>t.Id!=TopicId);
+            
         }
         protected void HandleClick(string moduleId)
         {
-            NavigationManager.NavigateTo($"/moduledetails/{CourseId}/{moduleId}",true);
+            NavigationManager.NavigateTo($"/moduledetails/{CourseId}/{moduleId}", true);
+        }
+        protected void HandleClickTopic(string CourseId, string ModeuleId, string TopicId)
+        {
+            NavigationManager.NavigateTo($"/topicdetails/{CourseId}/{ModeuleId}/{TopicId}", true);
         }
     }
 }

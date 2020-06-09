@@ -29,6 +29,7 @@ namespace TavssStudent.Pages
         public List<Developer> Developers { get; set; }
 
         public Developer Developer { get; set; }
+        public CommunitiesDto Community { get; set; }
 
         public string[] Logo { get; set; }
         public string[] Path { get; set; }
@@ -36,11 +37,19 @@ namespace TavssStudent.Pages
         public int PageCount { get; set; }
         public int PageNumber { get; set; } = 0;
         public int PageSize { get; set; } = 9;
+        public string Title { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
             LoadDeveloper();
-            AllPosts =( await CommunityService.GetAllPosts()).ToList().OrderByDescending(d=>d.Time);
+            Community = await CommunityService.GetCommunity(CommunityId);
+            AllPosts = Community.Posts.OrderByDescending(d => d.Time);
+            Title = Community.Name + " Posts";
+            if (AllPosts ==null || AllPosts.Count()==0)
+            {
+                AllPosts = (await CommunityService.GetAllPosts()).ToList().OrderByDescending(d => d.Time);
+                Title = "All Posts";
+            }
             PostsCount = AllPosts.Count();
             PageCount = PostsCount / 9;
             Posts = AllPosts.Skip(PageNumber * PageSize).Take(PageSize);

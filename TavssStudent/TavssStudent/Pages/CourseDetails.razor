@@ -1,5 +1,7 @@
 ﻿@page "/coursedetails/{CourseId}"
 @inherits CourseDetailsBase
+@attribute [Authorize]
+
 <base href="~/" />
 @if (Course == null)
 {

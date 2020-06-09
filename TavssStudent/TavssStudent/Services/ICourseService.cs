@@ -13,5 +13,6 @@ namespace TavssStudent.Services
         Task<IEnumerable<MinCourseViewModel>> GetCoursesForStudent(string SID);
         Task<CourseDto> GetCourseById(string CID);
         Task<Module> GetModuleById(string CID, string MID);
+        Task<Topic> GetTopicById(string CID, string MID, string TID);
     }
 }

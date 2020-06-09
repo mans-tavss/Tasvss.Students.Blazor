@@ -6,15 +6,6 @@ using System.Threading.Tasks;
 
 namespace TavssStudent.Models
 {
-    public enum TopicType
-    {
-        Video,
-        Docx,
-        PDF,
-        MD,
-        PPT,
-        PICS
-    }
 
     public class Topic
     {
