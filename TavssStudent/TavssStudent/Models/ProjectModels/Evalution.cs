@@ -2,6 +2,7 @@
 {
     public enum Evalution
     {
+        None,
         Excellent,
         VeryGood,
         Good,

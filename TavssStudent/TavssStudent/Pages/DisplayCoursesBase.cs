@@ -15,6 +15,7 @@ namespace TavssStudent.Pages
         public ICourseService CourseService{ get; set; }
 
         public IEnumerable<MinCourseViewModel> Courses{ get; set; }
+        //public IEnumerable<Doctor> Doctors{ get; set; }
 
         public string[] Logo { get; set; }
         public string[] Path { get; set; }
@@ -22,6 +23,7 @@ namespace TavssStudent.Pages
         protected async override Task OnInitializedAsync()
         {
             Courses = await CourseService.GetCourses();
+            //Doctors= (await CourseService.GetDotorsForCourse(course.Id)).ToList()
         }
     }
 }

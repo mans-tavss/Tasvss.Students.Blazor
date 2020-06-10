@@ -45,7 +45,7 @@ namespace TavssStudent.Pages
             Community = await CommunityService.GetCommunity(CommunityId);
             AllPosts = Community.Posts.OrderByDescending(d => d.Time);
             Title = Community.Name + " Posts";
-            if (AllPosts ==null || AllPosts.Count()==0)
+            if (AllPosts == null || AllPosts.Count() == 0)
             {
                 AllPosts = (await CommunityService.GetAllPosts()).ToList().OrderByDescending(d => d.Time);
                 Title = "All Posts";
@@ -57,7 +57,7 @@ namespace TavssStudent.Pages
         protected void IncreasePage()
         {
             PageNumber = ++PageNumber;
-            if (PageNumber>PageCount)
+            if (PageNumber > PageCount)
             {
                 Posts = Posts;
             }
@@ -68,12 +68,12 @@ namespace TavssStudent.Pages
                 StateHasChanged();
                 NavigationManager.NavigateTo($"/posts/{CommunityId}");
             }
-            
+
         }
         protected void DecreasePage()
         {
             PageNumber = --PageNumber;
-            if (PageNumber<0)
+            if (PageNumber < 0)
             {
                 Posts = Posts;
             }
@@ -111,7 +111,7 @@ namespace TavssStudent.Pages
         public async void AddPostDialog_OnDialogClose()
         {
             LoadDeveloper();
-            AllPosts = (await CommunityService.GetAllPosts()).ToList().OrderBy(d=>d.Time);
+            AllPosts = (await CommunityService.GetAllPosts()).ToList().OrderBy(d => d.Time);
             PostsCount = AllPosts.Count();
             PageCount = PostsCount / 9;
             Posts = AllPosts.Skip(PageNumber * PageSize).Take(PageSize);

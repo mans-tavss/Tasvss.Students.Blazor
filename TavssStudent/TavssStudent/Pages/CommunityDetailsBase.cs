@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TavssStudent.Components;
 using TavssStudent.Models;
 using TavssStudent.Services;
 
@@ -36,7 +37,7 @@ namespace TavssStudent.Pages
             LoadDeveloper();
             if (Community.Posts.Count() != 0)
             {
-                Post = Community.Posts.FirstOrDefault();
+                Post = Community.Posts.OrderByDescending(d=>d.Time).FirstOrDefault();
                 Developer = Developers.FirstOrDefault();
 
             }
@@ -63,6 +64,33 @@ namespace TavssStudent.Pages
                      Name="Ahmed"
                 }
             };
+        }
+
+        public AddPostDialogBase AddPostDialog { get; set; }
+        protected void QuickAddPost()
+        {
+            AddPostDialog.Show();
+        }
+        public async void AddPostDialog_OnDialogClose()
+        {
+            LoadDeveloper();
+            Community = await CommunityService.GetCommunity(CommunityId);
+            if (Community.Posts.Count() != 0)
+            {
+                Post = Community.Posts.OrderByDescending(d => d.Time).FirstOrDefault();
+                Developer = Developers.FirstOrDefault();
+
+            }
+            if (Post != null && Post.Image != null && Post.Image.Contains("wwwroot"))
+            {
+                Logo = Post.Image.Split("wwwroot");
+                Path = Post.Image.Split("wwwroot");
+            }
+            StateHasChanged();
+        }
+        protected void SaveId()
+        {
+            CommunityId = CommunityId;
         }
     }
 }

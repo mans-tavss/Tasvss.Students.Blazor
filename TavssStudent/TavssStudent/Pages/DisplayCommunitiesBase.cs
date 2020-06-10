@@ -14,6 +14,9 @@ namespace TavssStudent.Pages
         [Inject]
         public ICommunityService CommunityService { get; set; }
 
+        public string[] Logo { get; set; }
+        public string Localhost { get; set; } = SD.CommunityLocalhost;
+
         public IEnumerable<MinCommunityListViewModel> Communties{ get; set; }
 
         protected override async Task OnInitializedAsync()

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using TavssStudent.Models;
 
@@ -19,10 +20,19 @@ namespace TavssStudent.Services
         }
         public async Task<bool> CreatePost(string CID, InsertPostViewModel model)
         {
-            CID = "5ed7e2b2a36b653a1802aa9f";
+            var ec = "5ee053a44fa35c34c42819b2";
+            var cc = "5ee053cb4fa35c34c42819b3";
+            var dn = "5ee053354fa35c34c42819b1";
+            CID = cc;
             model.IssuerId = "mohamed";
-           await httpClient.PutJsonAsync<InsertPostViewModel>($"api/v1/Community/CreatePost/{CID}", model);
-            return true;
+           //await httpClient.PutJsonAsync<InsertPostViewModel>($"api/v1/Community/CreatePost/{CID}", model);
+            StringContent modelJson = new StringContent(JsonSerializer.Serialize(model), Encoding.UTF8, "application/json");
+            var response = await httpClient.PutAsync($"api/v1/Community/CreatePost/{CID}", modelJson);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
         }
 
         public Task<bool> DeEmo(string CID, string PID, string EID)

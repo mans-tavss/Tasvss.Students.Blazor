@@ -32,14 +32,20 @@ namespace TavssStudent.Pages
         };
         public string[] Logo { get; set; }
         public string[] TopicPath { get; set; }
+        public string[] VideoPath { get; set; }
         public string Localhost { get; set; } = SD.CourseLocalhost;
 
         protected async override Task OnInitializedAsync()
         {
+            var values = Enum.GetNames(typeof(TopicType));
+            //var topicType = Enum.GetName(typeof(TopicType), Topic.Type);
             Module = await CourseService.GetModuleById(CourseId, ModeuleId);
-            if (Module.Topics!=null &&Module.Topics.FirstOrDefault().Path!=null)
+            if (Module.Topics !=null&& Module.Topics.Count != 0)
             {
-                TopicPath = Module.Topics.FirstOrDefault().Path.Split("wwwroot");
+                if(Module.Topics.Any(d=>d.Type.ToString() == values[2]))
+                    TopicPath = Module.Topics.FirstOrDefault(d => d.Type.ToString() == values[2]).Path.Split("wwwroot");
+                if (Module.Topics.Any(d => d.Type.ToString() == values[0]))
+                    VideoPath = Module.Topics.FirstOrDefault(d => d.Type.ToString() == values[0]).Path.Split("wwwroot");
             }
             Course = await CourseService.GetCourseById(CourseId);
         }

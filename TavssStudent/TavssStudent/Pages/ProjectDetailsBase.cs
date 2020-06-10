@@ -17,11 +17,17 @@ namespace TavssStudent.Pages
         public NavigationManager NavigationManager { get; set; }
         [Parameter]
         public string ProjectId { get; set; }
-        public int Duration { get; set; }
+        public int ToDoDuration { get; set; }
+        public int DoneDuration { get; set; }
+        public int InProgressDuration { get; set; }
+        public int MaxDuration { get; set; }
         public bool ShowDownload { get; set; } = false;
         public string[] Logo { get; set; }
+        public string[] Logos { get; set; }
         public string[] ProjectPath { get; set; }
+        public string[] WikiPath { get; set; }
         public string ProjectDownloadPath { get; set; }
+        public string WikiDownloadPath { get; set; }
         public string Localhost { get; set; } = SD.ProjectLocalhost;
 
         public Project Project { get; set; } = new Project()
@@ -47,8 +53,26 @@ namespace TavssStudent.Pages
             FrameworkParm = Project.Framework;
             if (Project.Framework != null && Project.Framework.ToDos != null)
             {
-                if(Project.Framework.ToDos.Count()>0)
-                    Duration = Project.Framework.ToDos.LastOrDefault().EndDate.Day - Project.Framework.ToDos.LastOrDefault().StartDate.Day;
+                var maxduration = new List<int>();
+                if (Project.Framework.ToDos.Count() > 0)
+                {
+                    ToDoDuration = (Project.Framework.ToDos.Max(t => t.EndDate) - Project.Framework.ToDos.Min(t => t.StartDate)).Days;
+                    maxduration.Add(ToDoDuration);
+                }
+                if (Project.Framework.InProgress.Count() > 0)
+                {
+                    InProgressDuration = (Project.Framework.InProgress.Max(t => t.EndDate) - Project.Framework.InProgress.Min(t => t.StartDate)).Days;
+                    maxduration.Add(InProgressDuration);
+
+                }
+                if (Project.Framework.Dones.Count() > 0)
+                {
+                    DoneDuration = (Project.Framework.Dones.Max(t => t.EndDate) - Project.Framework.Dones.Min(t => t.StartDate)).Days;
+                    maxduration.Add(DoneDuration);
+                }
+                //MaxDuration = maxduration.Max();
+                MaxDuration = ToDoDuration+InProgressDuration+DoneDuration;
+
             }
             Projects = (await ProjectService.GetAllProjects()).ToList().Where(p => p.Id != ProjectId).Take(3);
 
@@ -67,11 +91,27 @@ namespace TavssStudent.Pages
             {
                 Project.SuperVisior = new SuperVisor { Name = "No Doctor yet." };
             }
-            if (Project.Framework != null && Project.Framework.ToDos != null)
-            {
-                if (Project.Framework.ToDos.Count() > 0)
-                    Duration = Project.Framework.ToDos.LastOrDefault().EndDate.Day - Project.Framework.ToDos.LastOrDefault().StartDate.Day;
-            }
+            //if (Project.Framework != null && Project.Framework.ToDos != null)
+            //{
+            //    var maxduration = new List<int>();
+            //    if (Project.Framework.ToDos.Count() > 0)
+            //    {
+            //        ToDoDuration = Project.Framework.ToDos.Max(t => t.EndDate).Day - Project.Framework.ToDos.Min(t => t.StartDate).Day;
+            //        maxduration.Add(ToDoDuration);
+            //    }
+            //    if (Project.Framework.InProgress.Count() > 0)
+            //    {
+            //        InProgressDuration = Project.Framework.InProgress.Max(t => t.EndDate).Day - Project.Framework.InProgress.Min(t => t.StartDate).Day;
+            //        maxduration.Add(InProgressDuration);
+
+            //    }
+            //    if (Project.Framework.Dones.Count() > 0)
+            //    {
+            //        DoneDuration = Project.Framework.Dones.Max(t => t.EndDate).Day - Project.Framework.Dones.Min(t => t.StartDate).Day;
+            //        maxduration.Add(DoneDuration);
+            //    }
+            //    MaxDuration = maxduration.Max();
+            //}
             Projects =(await ProjectService.GetAllProjects()).ToList().Where(p=>p.Id!=ProjectId).Take(3);
             StateHasChanged();
             //NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
@@ -102,6 +142,11 @@ namespace TavssStudent.Pages
             {
                 ProjectPath = Project.ProjectPath.Split("wwwroot");
                 ProjectDownloadPath = Localhost + ProjectPath[1];
+            }
+            if (Project.Wiki !=null && Project.Wiki.Contains("wwwroot"))
+            {
+                WikiPath = Project.Wiki.Split("wwwroot");
+                WikiDownloadPath = Localhost + WikiPath[1];
             }
             StateHasChanged();
 

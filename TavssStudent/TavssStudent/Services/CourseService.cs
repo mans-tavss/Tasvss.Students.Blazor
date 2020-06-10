@@ -49,5 +49,11 @@ namespace TavssStudent.Services
         {
             return await httpClient.GetJsonAsync<Topic>($"api/v1/StudentCourse/GetTopicById/{CID}/{MID}/{TID}");
         }
+
+        public async Task<IEnumerable<Doctor>> GetDotorsForCourse(string CID)
+        {
+            var r= await httpClient.GetJsonAsync<IEnumerable<Doctor>>($"api/v1/StudentCourse/GetDoctorsByCourseId/{CID}");
+            return r;
+        }
     }
 }

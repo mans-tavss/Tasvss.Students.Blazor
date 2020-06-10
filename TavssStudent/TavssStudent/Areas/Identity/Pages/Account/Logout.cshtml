@@ -4,64 +4,28 @@
     ViewData["Title"] = "Log out";
 }
 
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 <!-- Bootstrap -->
 <link href="~/lib/bootstrap/css/bootstrap.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link href="~/lib/bootstrap/css/bootstrap.bundle.css" rel="stylesheet" />
 <!-- slick slider -->
 <link rel="stylesheet" href="~/plugins/slick/slick.css">
-<!-- themefy-icon -->
-
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-
-<script src="https://kit.fontawesome.com/273d0585ea.js" crossorigin="anonymous"></script>
-
-<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
-
-<!-- animation css -->
-<link rel="stylesheet" href="~/plugins/animate/animate.css">
-<!-- aos -->
-<link rel="stylesheet" href="~/plugins/aos/aos.css">
-<!-- venobox popup -->
-<link rel="stylesheet" href="~/plugins/venobox/venobox.css">
 
 <!-- Main Stylesheet -->
 <link href="~/css/style.css" rel="stylesheet">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-
 <div class="preloader">
-    <img src="images/preloader.gif" alt="preloader">
+    <img src="/images/preloader.gif" alt="preloader">
 </div>
-<header>
-    <h1>@ViewData["Title"]</h1>
-    <p>You have successfully logged out of the application.</p>
 
-    <div class="spinner"></div>
-
-</header>
-
+<script>
+    $(window).on('load', function () {
+        $('.preloader').fadeOut(700);
+    });
+</script>
 <script>
     window.onload = function () {
         var form = document.getElementById("logoutForm");
         form.submit();
     }
 </script>
-<script src="~/font-awesome/js/fontawesome.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<!-- slick slider -->
-<script src="~/plugins/slick/slick.min.js"></script>
-<!-- aos -->
-<script src="~/plugins/aos/aos.js"></script>
-<!-- venobox popup -->
-<script src="~/plugins/venobox/venobox.min.js"></script>
-<!-- filter -->
-<script src="~/plugins/filterizr/jquery.filterizr.min.js"></script>
-<!-- google map -->
-<script src="~/plugins/google-map/gmap.js"></script>
-<!-- Main Script -->
-<script src="~/js/script.js"></script>
+

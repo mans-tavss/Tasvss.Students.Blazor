@@ -7,6 +7,7 @@
     <div class="spinner"></div>
 
 
+
 }
 else
 {
@@ -25,7 +26,7 @@ else
                                     Logo = course.LogoPath.Split(@"wwwroot\");
                                     //ProjectPath = project.ProjectPath.Split("wwwroot");
                                     <a href="@($"/coursedetails/{course.Id}")">
-                                        <img class="card-img-top rounded-0" style="width:260px;height:220px"
+                                        <img class="card-img-top rounded-0" style="width:320px;height:220px"
                                              asp-append-version="true" src="@(Localhost + Logo[1])" alt="@course.Name">
                                     </a>
 
@@ -33,7 +34,7 @@ else
                                 else
                                 {
                                     <a href="@($"/coursedetails/{course.Id}")">
-                                        <img class="card-img-top rounded-0" asp-append-version="true" style="width:260px;height:220px"
+                                        <img class="card-img-top rounded-0" asp-append-version="true" style="width:320px;height:220px"
                                              src="images/courses/course1.jpg" alt="@course.Name">
                                     </a>
                                 }
@@ -43,10 +44,10 @@ else
                                     <h4 class="card-title"> @course.Name</h4>
                                 </a>
                                 <p class="card-text mb-4">
-                                    @foreach (var doctor in course.DRID)
+                                    @*@foreach (var doctor in (CourseService.GetDotorsForCourse(course.Id)).GetAwaiter().GetResult().ToList())
                                     {
                                         <h4>@doctor</h4>
-                                    }
+                                    }*@
                                 </p>
                                 <a href="@($"/coursedetails/{course.Id}")" class="btn btn-primary btn-sm">Start</a>
                             </div>

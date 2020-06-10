@@ -16,13 +16,13 @@ else
 }
 @if (Course.Modules.Count > 0)
 {
-
-    @foreach (var modeule in Course.Modules)
-    {
-        <section class="section">
-            <div class="container">
-                <div class="row justify-content-center">
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                @foreach (var modeule in Course.Modules)
+                {
                     <div class="col-lg-4 col-sm-6 mb-5">
+
                         <div class="card p-0 border-primary rounded-0 hover-shadow">
                             @{
                                 if (modeule != null && modeule.LogoPath != null && modeule.LogoPath.Contains("wwwroot"))
@@ -31,13 +31,13 @@ else
                                     //ProjectPath = project.ProjectPath.Split("wwwroot");
 
                                     <a href="@($"/moduledetails/{Course.Id}/{modeule.Id}")">
-                                        <img class="card-img-top" src="@(Localhost + Logo[1])" alt="@modeule.Name">
+                                        <img class="card-img-top" src="@(Localhost + Logo[1])" style="width:320px;height:220px" alt="@modeule.Name">
                                     </a>
                                 }
                                 else
                                 {
                                     <a href="@($"/moduledetails/{Course.Id}/{modeule.Id}")">
-                                        <img class="card-img-top rounded-0" asp-append-version="true" src="images/courses/CousesLogo.jpg" alt="@modeule.Name">
+                                        <img class="card-img-top rounded-0" style="width:320px;height:220px" asp-append-version="true" src="images/courses/CousesLogo.jpg" alt="@modeule.Name">
                                     </a>
 
                                 }
@@ -50,10 +50,11 @@ else
                             </div>
                         </div>
                     </div>
-                </div>
+
+                }
             </div>
-        </section>
-    }
+        </div>
+    </section>
 }
 else
 {

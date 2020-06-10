@@ -30,7 +30,7 @@
                                 <h6 class="mb-0">DURATION</h6>
                                 @if (Project.Framework != null && Project.Framework.ToDos != null)
                                 {
-                                    <p class="mb-0">@Duration Day</p>
+                                    <p class="mb-0"><i class="fas fa-clock"></i> &nbsp;@MaxDuration Day</p>
                                 }
                                 else
                                 {
@@ -54,6 +54,49 @@
         <!-- project details -->
         <div class="row">
             <div class="col-6  offset-3 mb-4">
+                <div class="col-6  offset-1 mb-4">
+                    <!-- course thumb -->
+                    @if (ShowDownload)
+                    {
+                        @if (Project != null && WikiDownloadPath != null)
+                        {
+                            <embed src="@(WikiDownloadPath)" width="500px" height="300px" />
+                            <p>
+                                you can <a href="@(WikiDownloadPath)" target="_blank">
+                                    click here to download the wiki.
+                                </a>
+                            </p>
+                            @*<object data="@(ProjectDownloadPath)" type="application/pdf" width="100%" height="500px">
+                                <p>
+                                    It appears you don't have a PDF plugin for this browser.
+                                    No biggie... you can <a href="@(ProjectDownloadPath)">
+                                        click here to
+                                        download the PDF file.
+                                    </a>
+                                </p>
+                                </object>*@
+
+
+                        }
+                        @if (Project != null && ProjectDownloadPath != null)
+                        {
+
+                            <p>
+                                you can <a class="btn-outline-success" href="@(ProjectDownloadPath)" target="_blank">
+                                    click here to download the project.
+                                </a>
+                            </p>
+
+                        }
+                        @if (Project != null && ProjectDownloadPath == null && WikiDownloadPath == null)
+                        {
+                            <h4 class="offset-2">There is nothing to download.</h4>
+                        }
+
+
+                    }
+                </div>
+
                 <!-- course thumb -->
                 @if (Project != null && Logo != null)
                 {
@@ -61,41 +104,6 @@
                          class="img-fluid w-100" alt="project's image">
                 }
             </div>
-            <div class="col-6  offset-3 mb-4">
-                <!-- course thumb -->
-                @if (ShowDownload)
-                {
-                    @if (Project != null && ProjectDownloadPath != null)
-                    {
-
-                        <embed src="@(ProjectDownloadPath)" width="500px" height="300px" />
-                        <p>
-                            you can <a href="@(ProjectDownloadPath)" target="_blank">
-                                click here to
-                                download the file.
-                            </a>
-                        </p>
-                        @*<object data="@(ProjectDownloadPath)" type="application/pdf" width="100%" height="500px">
-                            <p>
-                                It appears you don't have a PDF plugin for this browser.
-                                No biggie... you can <a href="@(ProjectDownloadPath)">
-                                    click here to
-                                    download the PDF file.
-                                </a>
-                            </p>
-                            </object>*@
-
-
-                    }
-                    @if (Project != null && ProjectDownloadPath == null)
-                    {
-                        <h4 class="offset-2">There is nothing to download.</h4>
-
-                    }
-
-                }
-            </div>
-
         </div>
     </div>
 </section>
@@ -107,7 +115,7 @@
 || Project.Framework.InProgress.Count() > 0 || Project.Framework.Dones.Count() > 0))
 {
 
-    <FrameworkDisplay FrameworkParm="@FrameworkParm" ProjectId="@Project.Id" OnProjectDeleted="ProjectDeleted">
+    <FrameworkDisplay FrameworkParm="@Project.Framework" ProjectId="@Project.Id" OnProjectDeleted="ProjectDeleted">
     </FrameworkDisplay>
 
 
@@ -204,7 +212,15 @@ else
             <div class="card border-danger mx-sm-1 p-3" style="width: 90%;max-height: 200px;height:200px;margin-left:70px">
                 <div class="card shadow text-info border-danger my-card" style="width: 60px; border: 1px solid rgb(112, 112, 112);margin-left:100px"><img src="/images/project/evaluation.png" alt="" style="width: 40%; margin: 10px 0px 10px 16px;"></div>
                 <div class=" text-center mt-3"><h4 class="text-danger" style="font-size: 15px">Evaluation</h4></div>
-                <div class="text-danger text-center mt-2"><h1 class="text-danger" style="font-size: 20px;">@Project.Evalution</h1></div>
+                @if (Project.Evalution.ToString() == "None")
+                {
+                    <div class="text-danger text-center mt-2"><h1 class="text-danger" style="font-size: 20px;">@Project.Evalution</h1></div>
+                }
+                else
+                {
+                    <div class="text-danger text-center mt-2"><h1 class="text-danger" style="font-size: 20px;">@Project.Evalution</h1></div>
+                    <div class="text-danger text-center mt-2"><h1 class="text-danger" style="font-size: 20px;">@Project.Mark</h1></div>
+                }
             </div>
         </div>
         <!-- /evaluation -->
@@ -212,7 +228,7 @@ else
 </div>
 <div class="row" style="margin-bottom:20px">
     <div class="offset-4 col-md-4" style="text-align: center; margin-top: 15px;">
-        <a class="btn btn-primary" style="width:90%; border-radius: 20px;"  href="@($"/adddeveloper/{ProjectId}")">Add Developer</a>
+        <a class="btn btn-primary" style="width:90%; border-radius: 20px;" href="@($"/adddeveloper/{ProjectId}")">Add Developer</a>
     </div>
 </div>
 <br>
@@ -233,7 +249,25 @@ else
                 {
                     <div class="col-lg-4 col-sm-6 mb-5">
                         <div class="card p-0 border-primary rounded-0 hover-shadow" style="width: 300px;">
-                            <img class="card-img-top rounded-0" src="images/courses/course-1.jpg" alt="course thumb">
+                            @if (project != null && project.ProjectLogo != null)
+                            {
+                                Logos = project.ProjectLogo.Split("wwwroot");
+                                //ProjectPath = project.ProjectPath.Split("wwwroot");
+                                <a href="@($"/projectdetails/{project.Id}")" @onclick="()=>HandleClick(project.Id)">
+                                    <img class="card-img-top rounded-0"
+                                         style="width:320px;height:220px"
+                                         src="@(Localhost + Logos[1])" alt="@project.ProjectName">
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@($"/projectdetails/{project.Id}")" @onclick="()=>HandleClick(project.Id)">
+                                    <img class="card-img-top rounded-0"
+                                         style="width:320px;height:220px"
+                                         src="/images/courses/course-2.jpg" alt="@project.ProjectName">
+                                </a>
+
+                            }
                             <div class="card-body">
                                 <a href="@($"/projectdetails/{project.Id}")" @onclick="()=>HandleClick(project.Id)">
                                     <h4 class="card-title">@project.ProjectName</h4>

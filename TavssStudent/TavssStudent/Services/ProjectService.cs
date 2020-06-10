@@ -166,7 +166,7 @@ namespace TavssStudent.Services
 
         public async Task<string> GetWiki(string projectId)
         {
-            return await httpClient.GetJsonAsync<string>($"api/v1/project/{projectId}");
+            return await httpClient.GetJsonAsync<string>($"api/MongoProject/api/v1/project/WriteWiki/{projectId}");
 
         }
 

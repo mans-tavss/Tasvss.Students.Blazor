@@ -1,4 +1,5 @@
 ﻿@page "/posts/{CommunityId}"
+@page "/posts"
 @inherits DisplayPostsBase
 @attribute [Authorize]
 
@@ -12,18 +13,29 @@
 
         @if (Posts == null)
         {
-            <h1 class="my-4">
-                Loading
-            </h1>
-            <div class="my-4">
-                <a class=" btn btn-primary" href="@($"/addpost/{CommunityId}")">Add Post</a>
-            </div>
-            @if (CommunityId != null)
-            {
-                <button @onclick="@QuickAddPost" class="btn btn-dark table-btn quick-add-btn ">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
-                <AddPostDialog CommunityId="@CommunityId" @ref="@AddPostDialog" CloseEventCallback="@AddPostDialog_OnDialogClose"></AddPostDialog>
 
-            }
+            <section class="section-sm" style="padding-top: initial; padding-bottom: 20px;">
+                <div class="container">
+                    <!-- course list -->
+                    <div class="card mb-4" style="width:800px;margin-left:80px;">
+                       
+                            <div class="card-body">
+                                <h2 class="card-title">No Posts</h2>
+                            </div>
+                            <button @onclick="@QuickAddPost" class="btn btn-dark table-btn quick-add-btn ">&nbsp;&nbsp;+&nbsp;&nbsp;</button>
+                            <AddPostDialog CommunityId="@CommunityId" @ref="@AddPostDialog" CloseEventCallback="@AddPostDialog_OnDialogClose"></AddPostDialog>
+                    </div>
+                    <!-- /course list -->
+                    <!-- mobile see all button -->
+                    <div class="row">
+                        <div class="col-9 text-center">
+                            <a href="@($"/posts")" style="width: 140px;" class="btn btn-lg btn-primary-outline d-lg-none d-inline-block">See Other Community Posts</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
         }
         else
         {
@@ -106,18 +118,6 @@
 
         }
 
-        <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
-
-            <!-- Side Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Side Widget</h5>
-                <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-                </div>
-            </div>
-
-        </div>
 
     </div>
     <!-- /.row -->

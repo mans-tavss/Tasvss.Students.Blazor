@@ -149,7 +149,7 @@ namespace TavssStudent.Areas.Identity.Pages.Account
         //    ReturnUrl = returnUrl;
         //    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         //}
-        [HttpPost]
+        //[HttpPost]
         public async Task<IActionResult> OnPostRegister(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
