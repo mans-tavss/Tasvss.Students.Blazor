@@ -11,12 +11,7 @@ namespace TavssStudent.Pages
 {
     public class ProjectDetailsBase : ComponentBase
     {
-        [Inject]
-        public IProjectService ProjectService { get; set; }
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-        [Parameter]
-        public string ProjectId { get; set; }
+        
         public int ToDoDuration { get; set; }
         public int DoneDuration { get; set; }
         public int InProgressDuration { get; set; }
@@ -29,16 +24,21 @@ namespace TavssStudent.Pages
         public string ProjectDownloadPath { get; set; }
         public string WikiDownloadPath { get; set; }
         public string Localhost { get; set; } = SD.ProjectLocalhost;
-
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+        [Parameter]
+        public string ProjectId { get; set; }
+        public IEnumerable<Project> Projects { get; set; } = new List<Project>();
+        public Framework FrameworkParm { get; set; }
         public Project Project { get; set; } = new Project()
         {
             Developer = new List<Developer>(),
             Framework = new Framework(),
             SuperVisior = new SuperVisor() { Name = "No Doctor yet." }
         };
-
-        public IEnumerable<Project> Projects { get; set; } = new List<Project>();
-        public Framework FrameworkParm { get; set; }
+        [Inject]
+        public IProjectService ProjectService { get; set; }
+        
         protected async override Task OnInitializedAsync()
         {
             Project = await ProjectService.GetProjectById(ProjectId);
@@ -70,7 +70,6 @@ namespace TavssStudent.Pages
                     DoneDuration = (Project.Framework.Dones.Max(t => t.EndDate) - Project.Framework.Dones.Min(t => t.StartDate)).Days;
                     maxduration.Add(DoneDuration);
                 }
-                //MaxDuration = maxduration.Max();
                 MaxDuration = ToDoDuration+InProgressDuration+DoneDuration;
 
             }
@@ -91,30 +90,9 @@ namespace TavssStudent.Pages
             {
                 Project.SuperVisior = new SuperVisor { Name = "No Doctor yet." };
             }
-            //if (Project.Framework != null && Project.Framework.ToDos != null)
-            //{
-            //    var maxduration = new List<int>();
-            //    if (Project.Framework.ToDos.Count() > 0)
-            //    {
-            //        ToDoDuration = Project.Framework.ToDos.Max(t => t.EndDate).Day - Project.Framework.ToDos.Min(t => t.StartDate).Day;
-            //        maxduration.Add(ToDoDuration);
-            //    }
-            //    if (Project.Framework.InProgress.Count() > 0)
-            //    {
-            //        InProgressDuration = Project.Framework.InProgress.Max(t => t.EndDate).Day - Project.Framework.InProgress.Min(t => t.StartDate).Day;
-            //        maxduration.Add(InProgressDuration);
-
-            //    }
-            //    if (Project.Framework.Dones.Count() > 0)
-            //    {
-            //        DoneDuration = Project.Framework.Dones.Max(t => t.EndDate).Day - Project.Framework.Dones.Min(t => t.StartDate).Day;
-            //        maxduration.Add(DoneDuration);
-            //    }
-            //    MaxDuration = maxduration.Max();
-            //}
+            
             Projects =(await ProjectService.GetAllProjects()).ToList().Where(p=>p.Id!=ProjectId).Take(3);
             StateHasChanged();
-            //NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
 
         }
         protected async Task DeleteDeveloperAsync(string developerId)
@@ -130,10 +108,8 @@ namespace TavssStudent.Pages
             {
                 Project.SuperVisior = new SuperVisor { Name = "No Doctor yet." };
             }
-            //FrameworkParm = Project.Framework;
             var result = await ProjectService.GetAllProjects();
             Projects = result.Where(p => p.Id != ProjectId).Take(3);
-            //StateHasChanged();
         }
         protected void ProjectDownload()
         {

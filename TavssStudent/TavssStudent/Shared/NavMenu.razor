@@ -58,7 +58,7 @@
                         </Authorized>
                         <NotAuthorized>
                             <NavLink class="nav-item" href="/" Match="NavLinkMatch.All">
-                                <NavLink class="nav-link">Home</NavLink>
+                                <NavLink class="nav-link"></NavLink>
                             </NavLink>
                             <NavLink class="nav-item" Match="NavLinkMatch.All">
 
@@ -80,7 +80,7 @@
                                         var user = (@context.User.Claims.FirstOrDefault(c => c.Type
                       == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value).Split("@");
                                     }
-                                    <img src="/images/teachers/teacher-3.jpg" class="user-img">
+                                    <img src="/images/Mohamed.JPG" class="user-img">
                                     Logout (@user[0])
                                 </Authorized>
                                 <NotAuthorized>

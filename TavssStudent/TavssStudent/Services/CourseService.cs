@@ -21,22 +21,16 @@ namespace TavssStudent.Services
         public async Task<IEnumerable<MinCourseViewModel>> GetCourses()
         {
             return await httpClient.GetJsonAsync<List<MinCourseViewModel>>("api/v1/supercourse/getcourses");
-
-            //return await JsonSerializer.DeserializeAsync<IEnumerable<MinCourseViewModel>>
-            //(await httpClient.GetStreamAsync($"api/v1/supercourse/getcourses"),
-            //    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         }
 
         public async Task<IEnumerable<MinCourseViewModel>> GetCoursesForStudent(string SID)
         {
             return await httpClient.GetJsonAsync<List<MinCourseViewModel>>($"api/v1/supercourse/getcourses/{SID}");
-
         }
 
         public async Task<CourseDto> GetCourseById(string CID)
         {
             return await httpClient.GetJsonAsync<CourseDto>($"api/v1/studentcourse/getcourse/{CID}");
-
         }
 
         public async Task<Module> GetModuleById(string CID, string MID)

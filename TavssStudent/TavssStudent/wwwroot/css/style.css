@@ -1020,6 +1020,7 @@ link:focus,
 .user-img{
     border-radius: 50%;
     width: 39px;
+    height: 50px;
     display: inline;
     margin-right: 5px;
 }

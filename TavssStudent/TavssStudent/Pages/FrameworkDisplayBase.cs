@@ -58,23 +58,77 @@ namespace TavssStudent.Pages
         protected async Task DeleteToDoAsync(string todoId)
         {
             await ProjectService.RemoveToDOFromProject(ProjectId, todoId);
+            if (ProjectId != null)
+            {
+                Framework = await ProjectService.GetFramework(ProjectId);
+                if (Framework.ToDos.Count() > 0)
+                {
+                    ToDoDuration = (Framework.ToDos.Max(t => t.EndDate) - Framework.ToDos.Min(t => t.StartDate)).Days;
+                }
+                if (Framework.InProgress.Count() > 0)
+                {
+                    InProgressDuration = (Framework.InProgress.Max(t => t.EndDate) - Framework.InProgress.Min(t => t.StartDate)).Days;
+
+                }
+                if (Framework.Dones.Count() > 0)
+                {
+                    DoneDuration = (Framework.Dones.Max(t => t.EndDate) - Framework.Dones.Min(t => t.StartDate)).Days;
+                }
+            }
+
             await OnProjectDeleted.InvokeAsync(ProjectId);
-            //StateHasChanged();
-            NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
+            StateHasChanged();
+            //NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
         }
         protected async Task DeleteInProgressAsync(string inprogressId)
         {
             await ProjectService.RemoveInProgressFromProject(ProjectId, inprogressId);
+            if (ProjectId != null)
+            {
+                Framework = await ProjectService.GetFramework(ProjectId);
+                if (Framework.ToDos.Count() > 0)
+                {
+                    ToDoDuration = (Framework.ToDos.Max(t => t.EndDate) - Framework.ToDos.Min(t => t.StartDate)).Days;
+                }
+                if (Framework.InProgress.Count() > 0)
+                {
+                    InProgressDuration = (Framework.InProgress.Max(t => t.EndDate) - Framework.InProgress.Min(t => t.StartDate)).Days;
+
+                }
+                if (Framework.Dones.Count() > 0)
+                {
+                    DoneDuration = (Framework.Dones.Max(t => t.EndDate) - Framework.Dones.Min(t => t.StartDate)).Days;
+                }
+            }
+
             await OnProjectDeleted.InvokeAsync(ProjectId);
-            //StateHasChanged();
-            NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
+            StateHasChanged();
+            //NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
         }
         protected async Task DeleteDoneAsync(string doneId)
         {
             await ProjectService.RemoveDoneFromProject(ProjectId, doneId);
+            if (ProjectId != null)
+            {
+                Framework = await ProjectService.GetFramework(ProjectId);
+                if (Framework.ToDos.Count() > 0)
+                {
+                    ToDoDuration = (Framework.ToDos.Max(t => t.EndDate) - Framework.ToDos.Min(t => t.StartDate)).Days;
+                }
+                if (Framework.InProgress.Count() > 0)
+                {
+                    InProgressDuration = (Framework.InProgress.Max(t => t.EndDate) - Framework.InProgress.Min(t => t.StartDate)).Days;
+
+                }
+                if (Framework.Dones.Count() > 0)
+                {
+                    DoneDuration = (Framework.Dones.Max(t => t.EndDate) - Framework.Dones.Min(t => t.StartDate)).Days;
+                }
+            }
+
             await OnProjectDeleted.InvokeAsync(ProjectId);
-            //StateHasChanged();
-            NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
+            StateHasChanged();
+            //NavigationManager.NavigateTo($"/projectdetails/{ProjectId}", true);
         }
     }
 }

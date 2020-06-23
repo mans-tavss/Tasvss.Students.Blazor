@@ -90,13 +90,7 @@
                             <div class="card-body">
                                 <a href="@($"/coursedetails/{course.Id}")">
                                     <h4 class="card-title"> @course.Name</h4>
-                                </a>
-                                <p class="card-text mb-4">
-                                    @foreach (var doctor in course.DRID)
-                                    {
-                                        <h4>Doctor : @doctor</h4>
-                                    }
-                                </p>
+                                </a>                               
                                 <a href="@($"/coursedetails/{course.Id}")" class="btn btn-primary btn-sm">Start</a>
                             </div>
                         </div>
